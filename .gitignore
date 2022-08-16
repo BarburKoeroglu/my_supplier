@@ -1,2 +1,10 @@
-/frontend/
 /.idea/
+/backend/mvnw
+/backend/mvnw.cmd
+/backend/.mvn
+/backend/target
+/frontend/node_modules
+*/*.iml
+.DS_Store
+/frontend/build/
+/backend/src/main/resources/static/
