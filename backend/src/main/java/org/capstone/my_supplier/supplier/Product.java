@@ -7,7 +7,6 @@ public record Product(
         String id,
         String productName,
         String itemNumber,
-        String description,
         String category
 ) {
 }

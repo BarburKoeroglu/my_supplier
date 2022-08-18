@@ -8,17 +8,16 @@ public class ProductService {
 
     private final ProductRepo productRepo;
 
-    public ProductService(ProductRepo productRepo) {
+    ProductService(ProductRepo productRepo) {
         this.productRepo = productRepo;
     }
 
     public Product addProduct(NewProduct newProduct) {
         return productRepo.save(new Product(
                 UUID.randomUUID().toString(),
-                newProduct.productName,
-                newProduct.itemNumber,
-                newProduct.category
-        ))
+                newProduct.productName(),
+                newProduct.itemNumber(),
+                newProduct.category()
+        ));
     }
 }
-

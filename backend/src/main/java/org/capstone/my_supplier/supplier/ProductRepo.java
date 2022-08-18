@@ -1,7 +1,7 @@
 package org.capstone.my_supplier.supplier;
 
-public class ProductRepo {
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-    public Product save(Product product) {
-    }
+public interface ProductRepo extends MongoRepository<Product, String> {
+
 }
