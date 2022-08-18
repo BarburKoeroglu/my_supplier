@@ -17,6 +17,7 @@ public class ProductService {
                 UUID.randomUUID().toString(),
                 newProduct.productName(),
                 newProduct.itemNumber(),
+                newProduct.description(),
                 newProduct.category()
         ));
     }
