@@ -9,5 +9,6 @@ public record Product(
         String itemNumber,
         String description,
         Category productCategory
+
 ) {
 }
