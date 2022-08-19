@@ -3,10 +3,9 @@ package org.capstone.my_supplier.supplier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api/supplier/products")
 public class ProductController {
 
     private final ProductService productService;
