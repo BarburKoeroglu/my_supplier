@@ -8,7 +8,6 @@ public record Product(
         String productName,
         String itemNumber,
         String description,
-        Category productCategory
-
+        Category category
 ) {
 }

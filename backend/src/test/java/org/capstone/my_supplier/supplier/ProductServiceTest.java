@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Test;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 class ProductServiceTest {
 
     ProductRepo productRepo = mock(ProductRepo.class);
+
     ProductService productService = new ProductService(productRepo);
 
     @Test
