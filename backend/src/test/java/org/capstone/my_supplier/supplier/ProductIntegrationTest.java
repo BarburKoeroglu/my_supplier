@@ -28,7 +28,7 @@ class ProductIntegrationTest {
     @Test
     void addProduct() throws Exception{
 
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/supplier/products")
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/supplier/products")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""
                         {"productName":"Erdbeeren"}
