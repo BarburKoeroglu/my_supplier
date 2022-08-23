@@ -4,4 +4,5 @@ export enum Category {
     GEMUESE = "GEMUESE",
     KRAEUTER = "KRAUTER",
     TROCKENSORTIMENT = "TROCKENSORTIMENT"
+<<<<<<< HEAD
 }
