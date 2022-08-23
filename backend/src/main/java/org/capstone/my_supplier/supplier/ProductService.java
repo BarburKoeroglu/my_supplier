@@ -1,6 +1,8 @@
 package org.capstone.my_supplier.supplier;
 
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -8,8 +10,12 @@ public class ProductService {
 
     private final ProductRepo productRepo;
 
-    ProductService(ProductRepo productRepo) {
+    ProductService(ProductRepo productRepo){
         this.productRepo = productRepo;
+    }
+
+    public List<Product> getAllProducts(){
+        return productRepo.findAll();
     }
 
     public Product addProduct(NewProduct newProduct) {

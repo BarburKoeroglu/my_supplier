@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/supplier/products")
 public class ProductController {
@@ -21,4 +23,7 @@ public class ProductController {
                 .status(HttpStatus.CREATED)
                 .body(savedProduct);
     }
+
+    @GetMapping
+    public List<Product> listAllProducts(){return productService.getAllProducts();}
 }
