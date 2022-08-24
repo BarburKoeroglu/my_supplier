@@ -32,7 +32,7 @@ export default function AddNewProduct(props: AddProductProps){
                 setDescription("");
                 setCategory(undefined)})
             .catch((error) => {
-            notify("Bitte alle Felder ausfüllen. " + error.message)
+            toast.error("Bitte alle Felder ausfüllen. " + error.message)
             })
     }
 

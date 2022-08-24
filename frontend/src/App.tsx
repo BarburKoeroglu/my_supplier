@@ -1,22 +1,24 @@
 import React, {useState} from 'react';
 import './App.css';
-import axios from "axios";
 import ProductList from "./supplier/ProductList";
 import useProducts from "./supplier/useProducts";
-
+import {toast, ToastContainer} from "react-toastify";
 
 function App() {
-    const productHook = useProducts();
-    const [message, setMessage] = useState();
 
-    axios.get("/supplier/products")
-        .then((response => response.data))
-        .then(setMessage)
+    const [message, setMessage] = useState();
 
     return (
         <>
-            <h1>{message}</h1>
-            <ProductList products={productHook.products} addProduct={productHook.addProduct}/>
+            <HashRouter>
+                <Header/>
+                <main>
+                    <AllRoutes/>
+                    <h1>{message}</h1>
+
+                    <ToastContainer position={toast.POSITION.TOP_RIGHT}/>
+                </main>
+            </HashRouter>
         </>
     );
 }

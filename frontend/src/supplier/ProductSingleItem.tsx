@@ -1,7 +1,8 @@
-
 export default function ProductSingleItem() {
 
     return (
+
+        <>
 
             <tr>
                 <th>Produkt</th>
@@ -9,5 +10,7 @@ export default function ProductSingleItem() {
                 <th>Beschreibung</th>
                 <th>Kategorie</th>
             </tr>
+
+        </>
     )
 }

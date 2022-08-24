@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Product} from "./Product";
 import {NewProduct} from "./NewProduct";
 import axios from "axios";
@@ -7,6 +7,8 @@ import axios from "axios";
 export default function useProducts() {
 
     const [products, setProducts] = useState<Product[]>([]);
+
+    useEffect(() => {fetchAllProducts()},[]);
 
     const addProduct = (newProduct: NewProduct) => {
 

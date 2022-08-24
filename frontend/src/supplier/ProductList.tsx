@@ -3,7 +3,6 @@ import {NewProduct} from "./NewProduct";
 import AddNewProduct from "./AddNewProduct";
 import ProductSingleItem from "./ProductSingleItem";
 
-
 type ProductListProps = {
     products: Product[],
     addProduct: (product: NewProduct) => Promise<Product>,
