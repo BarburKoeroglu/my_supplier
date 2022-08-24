@@ -3,7 +3,6 @@ import {Product} from "./Product";
 import {NewProduct} from "./NewProduct";
 import axios from "axios";
 
-
 export default function useProducts() {
 
     const [products, setProducts] = useState<Product[]>([]);

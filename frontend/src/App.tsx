@@ -19,6 +19,7 @@ function App() {
                     <ToastContainer position={toast.POSITION.TOP_RIGHT}/>
                 </main>
             </HashRouter>
+            <ToastContainer position={toast.POSITION.TOP_RIGHT}/>
         </>
     );
 }
