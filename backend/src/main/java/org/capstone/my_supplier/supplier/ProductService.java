@@ -14,10 +14,6 @@ public class ProductService {
         this.productRepo = productRepo;
     }
 
-    public List<Product> getAllProducts(){
-        return productRepo.findAll();
-    }
-
     public Product addProduct(NewProduct newProduct) {
         return productRepo.save(new Product(
                 UUID.randomUUID().toString(),
@@ -26,5 +22,9 @@ public class ProductService {
                 newProduct.description(),
                 newProduct.category()
         ));
+    }
+
+    public List<Product> getAllProducts(){
+        return productRepo.findAll();
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -37,5 +38,16 @@ class ProductIntegrationTest {
                 .andReturn();
         String content = result.getResponse().getContentAsString();
         Assertions.assertTrue(content.contains("Erdbeeren"));
+    }
+
+    @DirtiesContext
+    @Test
+    void listAllProducts() throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/supplier/products"))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        []
+                        """));
     }
 }

@@ -12,7 +12,7 @@ public class ProductController {
 
     private final ProductService productService;
 
-    ProductController(ProductService productService) {
+    ProductController(ProductService productService){
         this.productService = productService;
     }
 
@@ -25,5 +25,7 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<Product> listAllProducts(){return productService.getAllProducts();}
+    public List<Product> listAllProducts(){
+        return productService.getAllProducts();
+    }
 }
