@@ -1,12 +1,11 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './App.css';
-import ProductList from "./supplier/ProductList";
-import useProducts from "./supplier/useProducts";
 import {toast, ToastContainer} from "react-toastify";
+import {HashRouter} from "react-router-dom";
+import AllRoutes from "./general/AllRoutes";
+import Header from "./general/Header";
 
 function App() {
-
-    const [message, setMessage] = useState();
 
     return (
         <>
@@ -14,9 +13,6 @@ function App() {
                 <Header/>
                 <main>
                     <AllRoutes/>
-                    <h1>{message}</h1>
-
-                    <ToastContainer position={toast.POSITION.TOP_RIGHT}/>
                 </main>
             </HashRouter>
             <ToastContainer position={toast.POSITION.TOP_RIGHT}/>

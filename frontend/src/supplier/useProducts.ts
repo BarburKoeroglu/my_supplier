@@ -1,11 +1,11 @@
 import {useEffect, useState} from "react";
-import {Product} from "./Product";
+import {ProductType} from "./ProductType";
 import {NewProduct} from "./NewProduct";
 import axios from "axios";
 
 export default function useProducts() {
 
-    const [products, setProducts] = useState<Product[]>([]);
+    const [products, setProducts] = useState<ProductType[]>([]);
 
     useEffect(() => {fetchAllProducts()},[]);
 
@@ -24,5 +24,11 @@ export default function useProducts() {
             .then((data) => setProducts(data))
     }
 
-    return {products, addProduct}
+    const getProductByItemNumber = (itemNumber:string | undefined) =>{
+        return products.find(thisProduct =>{
+            return thisProduct.itemNumber === itemNumber
+        })
+    }
+
+    return {products, addProduct, getProductByItemNumber}
 }

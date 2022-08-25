@@ -12,7 +12,6 @@ import static org.mockito.Mockito.*;
 class ProductServiceTest {
 
     ProductRepo productRepo = mock(ProductRepo.class);
-
     ProductService productService = new ProductService(productRepo);
 
     @Test

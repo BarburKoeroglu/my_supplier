@@ -1,27 +1,37 @@
-import {Product} from "./Product";
+import {ProductType} from "./ProductType";
 import {NewProduct} from "./NewProduct";
 import AddNewProduct from "./AddNewProduct";
-import ProductSingleItem from "./ProductSingleItem";
+import SingleProduct from "./SingleProduct";
+import {useNavigate} from "react-router-dom";
 
 type ProductListProps = {
-    products: Product[],
-    addProduct: (product: NewProduct) => Promise<Product>,
+    products: ProductType[],
+    addProduct: (product: NewProduct) => Promise<ProductType>,
 }
 
 export default function ProductList(props: ProductListProps) {
 
-    return (
-        <span>
-            <h2>Produktliste</h2>
-            <ol>
-                    {props.products.map(product =>
-                    <li key={product.itemNumber}>
-                        <ProductSingleItem/>
-                    </li>
-                )}
+    const navigate = useNavigate();
 
-            </ol>
+    return (
+        <>
+            <h2>Produktliste</h2>
             <AddNewProduct addNewProduct={props.addProduct}/>
-        </span>
+            <table>
+                <tr>
+                    <th>Produkt</th>
+                    <th>Artikelnummer</th>
+                    <th>Beschreibung</th>
+                    <th>Kategorie</th>
+                </tr>
+                    {props.products.map((product) =>
+                        <tr key={product.itemNumber}>
+                            <SingleProduct product={product}/>
+                            <button onClick={() => navigate("/supplier/products" + product.itemNumber)}>Produktdetails
+                            </button>
+                        </tr>
+                    )}
+            </table>
+        </>
     )
 }
