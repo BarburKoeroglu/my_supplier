@@ -28,4 +28,21 @@ public class ProductController {
     public List<Product> listAllProducts(){
         return productService.getAllProducts();
     }
+
+    @PutMapping("/supplier/products/{id}")
+    public ResponseEntity<Product> updatedProduct(
+            @PathVariable String id,
+            @RequestBody Product updatedProduct) {
+        Product updatedProductDetails = productService.editProduct(updatedProduct);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(updatedProductDetails);
+    }
+
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable String id) {
+        boolean deleteSucceeded = productService.deleteProduct(id);
+        return new ResponseEntity<>(deleteSucceeded ? HttpStatus.NO_CONTENT : HttpStatus.NOT_FOUND);
+    }
 }

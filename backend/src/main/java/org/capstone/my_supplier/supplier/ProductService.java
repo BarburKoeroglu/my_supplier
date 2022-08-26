@@ -27,4 +27,21 @@ public class ProductService {
     public List<Product> getAllProducts(){
         return productRepo.findAll();
     }
+
+    public Product editProduct(Product updatedProduct){
+
+        productRepo.deleteById(updatedProduct.id());
+        productRepo.save(updatedProduct);
+
+        return updatedProduct;
+
+    }
+
+    public boolean deleteProduct(String id) {
+        if (productRepo.existsById(id)) {
+            productRepo.deleteById(id);
+            return true;
+        }
+        return false;
+    }
 }

@@ -1,5 +1,6 @@
 import {NavLink} from "react-router-dom";
 import {useEffect, useState} from "react";
+import "./Header.css";
 
 export default function Header(){
     const [linkButton, setLinkButton] = useState("Home");

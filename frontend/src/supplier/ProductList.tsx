@@ -14,7 +14,7 @@ export default function ProductList(props: ProductListProps) {
     const navigate = useNavigate();
 
     return (
-        <>
+        <span>
             <h2>Produktliste</h2>
             <AddNewProduct addNewProduct={props.addProduct}/>
             <table>
@@ -24,14 +24,14 @@ export default function ProductList(props: ProductListProps) {
                     <th>Beschreibung</th>
                     <th>Kategorie</th>
                 </tr>
-                    {props.products.map((product) =>
-                        <tr key={product.itemNumber}>
-                            <SingleProduct product={product}/>
-                            <button onClick={() => navigate("/supplier/products" + product.itemNumber)}>Produktdetails
-                            </button>
-                        </tr>
-                    )}
+                {props.products.map((product) =>
+                    <tr key={product.itemNumber}>
+                        <SingleProduct product={product}/>
+                        <button onClick={() => navigate("/supplier/products/{product.itemNumber}")}>Produktdetails</button>
+                    </tr>
+                )}
             </table>
-        </>
+
+        </span>
     )
 }
