@@ -3,7 +3,7 @@ header{
 }
 
 h1{
-    font-family: Helvetica;
+    font-family: Helvetica, Arial, Verdana, Tahoma, sans-serif;
     color: #1d721d;
     margin-bottom: 50px;
 }
@@ -19,7 +19,7 @@ h1{
 }
 
 nav .nav {
-    font-family: Helvetica;
+    font-family: Helvetica, Arial, Verdana, Tahoma, sans-serif;
     float: left;
     display: flex;
     color: white;
