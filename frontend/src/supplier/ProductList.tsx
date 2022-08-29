@@ -1,12 +1,13 @@
-import {ProductType} from "./ProductType";
+import {Product} from "./Product";
 import {NewProduct} from "./NewProduct";
 import AddNewProduct from "./AddNewProduct";
 import SingleProduct from "./SingleProduct";
 import {useNavigate} from "react-router-dom";
+import "./ProductList.css";
 
 type ProductListProps = {
-    products: ProductType[],
-    addProduct: (product: NewProduct) => Promise<ProductType>,
+    products: Product[],
+    addProduct: (product: NewProduct) => Promise<Product>,
 }
 
 export default function ProductList(props: ProductListProps) {
@@ -25,13 +26,12 @@ export default function ProductList(props: ProductListProps) {
                     <th>Kategorie</th>
                 </tr>
                 {props.products.map((product) =>
-                    <tr key={product.itemNumber}>
+                    <tr key={product.id}>
                         <SingleProduct product={product}/>
-                        <button onClick={() => navigate("/supplier/products/{product.itemNumber}")}>Produktdetails</button>
+                        <button onClick={() => navigate("/supplier/products/" + product.id)}>Produktdetails</button>
                     </tr>
                 )}
             </table>
-
         </span>
     )
 }

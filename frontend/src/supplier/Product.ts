@@ -1,6 +1,6 @@
 import {Category} from "./Category";
 
-export type ProductType ={
+export type Product ={
     id: string,
     productName: string,
     itemNumber: string,
