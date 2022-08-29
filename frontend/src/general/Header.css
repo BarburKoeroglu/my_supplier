@@ -1,0 +1,29 @@
+header{
+    top:0;margin-top: 50px;
+}
+
+h1{
+    font-family: Helvetica;
+    color: #1d721d;
+    margin-bottom: 50px;
+}
+
+.nav{
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #1d721d;
+    font-size: larger;
+}
+
+nav .nav {
+    font-family: Helvetica;
+    float: left;
+    display: flex;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}

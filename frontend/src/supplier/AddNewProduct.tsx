@@ -1,11 +1,11 @@
 import {ChangeEvent, FormEvent, useState} from "react";
 import {Category} from "./Category";
-import {ProductType} from "./ProductType";
+import {Product} from "./Product";
 import {toast} from "react-toastify";
 import {NewProduct} from "./NewProduct";
 
 type AddProductProps = {
-    addNewProduct: (product: NewProduct) => Promise<ProductType>,
+    addNewProduct: (product: NewProduct) => Promise<Product>,
 }
 
 export default function AddNewProduct(props: AddProductProps) {
