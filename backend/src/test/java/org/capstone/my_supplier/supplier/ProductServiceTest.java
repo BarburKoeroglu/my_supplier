@@ -1,5 +1,6 @@
 package org.capstone.my_supplier.supplier;
 
+import jdk.jfr.Description;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -52,5 +53,36 @@ class ProductServiceTest {
 
         assertThat(actualResult).hasSameElementsAs(expectedResult);
 
+    }
+
+    @Test
+    void editProduct() {
+        Product product = new Product("1122", "Mango", "3344", "Flugmango", Category.OBST);
+
+        ProductRepo productRepo = mock(ProductRepo.class);
+        when(productRepo.existsById(product.id())).thenReturn(true);
+
+        when(productRepo.save(any(Product.class)))
+                .thenReturn(product);
+
+        ProductService productService = new ProductService(productRepo);
+        Product actualResult = productService.editProduct(product);
+
+        assertThat(actualResult).isEqualTo(product);
+    }
+
+    @Test
+    void deleteProduct() {
+        Product product = new Product("8899 ", "Oregano", "6868", "Bio", Category.KRAEUTER);
+
+        ProductRepo productRepo = mock(ProductRepo.class);
+        when(productRepo.existsById(product.id())).thenReturn(true);
+
+        doNothing().when(productRepo).deleteById(product.id());
+
+        ProductService productService = new ProductService(productRepo);
+
+        productService.deleteProduct(product.id());
+        verify(productRepo).deleteById(product.id());
     }
 }
