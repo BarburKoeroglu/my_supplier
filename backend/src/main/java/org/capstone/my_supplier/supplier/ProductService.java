@@ -29,13 +29,10 @@ public class ProductService {
     }
 
     public Product editProduct(Product updatedProduct){
-
-        productRepo.deleteById(updatedProduct.id());
         productRepo.save(updatedProduct);
 
         return updatedProduct;
-
-    }
+}
 
     public boolean deleteProduct(String id) {
         if (productRepo.existsById(id)) {

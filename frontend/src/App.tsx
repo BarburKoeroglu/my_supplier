@@ -15,7 +15,7 @@ function App() {
                     <AllRoutes/>
                 </main>
             </HashRouter>
-            <ToastContainer position={toast.POSITION.TOP_RIGHT}/>
+            <ToastContainer className={"toastContainer"} position={toast.POSITION.TOP_RIGHT}/>
         </>
     );
 }

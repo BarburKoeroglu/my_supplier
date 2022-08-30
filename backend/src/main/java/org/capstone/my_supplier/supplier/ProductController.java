@@ -29,16 +29,15 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
-    @PutMapping("/supplier/products/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Product> updatedProduct(
             @PathVariable String id,
-            @RequestBody Product updatedProduct) {
-        Product updatedProductDetails = productService.editProduct(updatedProduct);
+            @RequestBody Product product){
+        Product updatedProductDetails = productService.editProduct(product);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(updatedProductDetails);
     }
-
 
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable String id) {

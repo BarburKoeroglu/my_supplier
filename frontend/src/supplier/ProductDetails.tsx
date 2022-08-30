@@ -50,7 +50,7 @@ export default function ProductDetails(props: ProductDetailsProps) {
                 category: category,
             };
             props.editProduct(updatedProduct)
-            toast.success("Die Änderungen wurden gespeichert.");
+            toast.success("Die Änderungen wurden gespeichert.", {theme:"dark"});
             setOpen(false);
         } else {
 
