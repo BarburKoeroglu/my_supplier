@@ -1,6 +1,8 @@
 package org.capstone.my_supplier.supplier;
 
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -8,7 +10,7 @@ public class ProductService {
 
     private final ProductRepo productRepo;
 
-    ProductService(ProductRepo productRepo) {
+    ProductService(ProductRepo productRepo){
         this.productRepo = productRepo;
     }
 
@@ -20,5 +22,23 @@ public class ProductService {
                 newProduct.description(),
                 newProduct.category()
         ));
+    }
+
+    public List<Product> getAllProducts(){
+        return productRepo.findAll();
+    }
+
+    public Product editProduct(Product updatedProduct){
+        productRepo.save(updatedProduct);
+
+        return updatedProduct;
+}
+
+    public boolean deleteProduct(String id) {
+        if (productRepo.existsById(id)) {
+            productRepo.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }

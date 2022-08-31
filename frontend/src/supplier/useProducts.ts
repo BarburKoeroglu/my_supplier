@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Product} from "./Product";
 import {NewProduct} from "./NewProduct";
 import axios from "axios";
@@ -6,6 +6,8 @@ import axios from "axios";
 export default function useProducts() {
 
     const [products, setProducts] = useState<Product[]>([]);
+
+    useEffect(() => {fetchAllProducts()},[]);
 
     const addProduct = (newProduct: NewProduct) => {
 
@@ -22,5 +24,17 @@ export default function useProducts() {
             .then((data) => setProducts(data))
     }
 
-    return {products, addProduct}
+    const getAllProducts = (itemNumber:string | undefined) =>{
+        return products.find(thisProduct =>{
+            return thisProduct.itemNumber === itemNumber
+        })
+    }
+
+    const editProduct = (product:Product)=>{
+        axios.put("/supplier/products/" + product.id, product)
+            .then((response) => response.data)
+            .then((data)=>setProducts(data))
+    }
+
+    return {products, addProduct, getProductByItemNumber: getAllProducts, editProduct}
 }
