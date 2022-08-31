@@ -24,17 +24,24 @@ export default function useProducts() {
             .then((data) => setProducts(data))
     }
 
-    const getAllProducts = (itemNumber:string | undefined) =>{
-        return products.find(thisProduct =>{
-            return thisProduct.itemNumber === itemNumber
-        })
+    const getAllProducts = () =>{
+        axios.get("/supplier/products")
+            .then(response => {
+                return response.data
+            })
     }
 
     const editProduct = (product:Product)=>{
         axios.put("/supplier/products/" + product.id, product)
             .then((response) => response.data)
             .then((data)=>setProducts(data))
+            .then(getAllProducts)
     }
 
-    return {products, addProduct, getProductByItemNumber: getAllProducts, editProduct}
+    const deleteProduct = (id: string | undefined) => {
+        return axios.delete(`/supplier/products/${id}`)
+            .then(getAllProducts)
+    }
+
+    return {products, addProduct, getAllProducts, editProduct, deleteProduct}
 }

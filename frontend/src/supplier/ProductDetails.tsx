@@ -18,7 +18,9 @@ import "./SingleProduct.css";
 
 type ProductDetailsProps = {
     products: Product[],
+    getAllProducts: (product: Product) =>void,
     editProduct: (product: Product) => void,
+    deleteProduct: (id:string) =>void,
 }
 
 export default function ProductDetails(props: ProductDetailsProps) {
@@ -30,7 +32,8 @@ export default function ProductDetails(props: ProductDetailsProps) {
     const [open, setOpen] = React.useState(false);
     const {id} = useParams();
 
-    const product: Product | undefined = props.products.find(element => element.id === id);
+    const product: Product = props.products.find(element => element.id === id)!;
+
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -59,7 +62,7 @@ export default function ProductDetails(props: ProductDetailsProps) {
     }
 
     function editProductName(event: ChangeEvent<HTMLInputElement>) {
-        setProductName(event.target.value)
+    setProductName(event.target.value)
     }
 
     function editItemNumber(event: ChangeEvent<HTMLInputElement>) {
@@ -84,6 +87,7 @@ export default function ProductDetails(props: ProductDetailsProps) {
             >
                 <div>
                     <Button sx={{backgroundColor: '#1d721d'}} variant="contained" size={"small"} onClick={handleClickOpen}>Produkt ändern</Button>
+                    <Button sx={{backgroundColor: '#1d721d'}} variant="contained" size={"small"} onClick={() => props.deleteProduct(product.id)}>Produkt löschen</Button>
                     <Dialog open={open} onClose={handleClose}>
                         <DialogTitle sx={{backgroundColor: '#9CA3AF'}}>Produktdetails ändern</DialogTitle>
                         <DialogContent sx={{backgroundColor: '#9CA3AF'}}>
