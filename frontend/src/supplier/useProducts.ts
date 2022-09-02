@@ -25,11 +25,12 @@ export default function useProducts() {
             .then((data) => setProducts(data))
     }
 
-    const editProduct = (product:Product)=>{
+        const editProduct = (product:Product)=>{
         axios.put("/supplier/products/" + product.id, product)
             .then((response) => response.data)
-            .then((data)=>setProducts(data))
-            .then(() => navigate("/supplier/products" + product.id))
+            .then(() => navigate("/supplier/products/" + product.id))
+            .then(fetchAllProducts)
+
     }
 
     const deleteProduct = (id: string | undefined) => {

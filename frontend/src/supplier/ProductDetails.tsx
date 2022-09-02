@@ -84,8 +84,8 @@ export default function ProductDetails(props: ProductDetailsProps) {
                 autoComplete="off"
             >
                 <div>
-                    <Button sx={{backgroundColor: '#1d721d'}} variant="contained" size={"small"} onClick={handleClickOpen}>Produkt bearbeiten</Button>
-                    <Button sx={{backgroundColor: '#1d721d'}} variant="contained" size={"small"} onClick={() => props.deleteProduct(product.id)}>Produkt löschen</Button>
+                    <Button sx={{backgroundColor: '#1d721d', marginLeft: '20px'}} variant="contained" size={"small"} onClick={handleClickOpen}>Produkt bearbeiten</Button>
+                    <Button sx={{backgroundColor: '#1d721d', marginLeft: '20px'}} variant="contained" size={"small"} onClick={() => props.deleteProduct(product.id)}>Produkt löschen</Button>
                     <Dialog open={open} onClose={handleClose}>
                         <DialogTitle sx={{backgroundColor: '#e8e9ec'}} color={'#1d721d'} fontSize={"big"}>Produktdetails bearbeiten</DialogTitle>
                         <DialogContent sx={{backgroundColor: '#e8e9ec'}}>
@@ -97,6 +97,7 @@ export default function ProductDetails(props: ProductDetailsProps) {
                                 type="text"
                                 fullWidth
                                 variant="standard"
+                                defaultValue={product?.productName}
                                 onChange={editProductName}
                             />
                             <TextField
@@ -106,6 +107,7 @@ export default function ProductDetails(props: ProductDetailsProps) {
                                 type="text"
                                 fullWidth
                                 variant="standard"
+                                defaultValue={product?.itemNumber}
                                 onChange={editItemNumber}
                             />
                             <TextField
@@ -115,6 +117,7 @@ export default function ProductDetails(props: ProductDetailsProps) {
                                 type="text"
                                 fullWidth
                                 variant="standard"
+                                defaultValue={product?.description}
                                 onChange={editDescription}
                             />
                             <TextField
