@@ -1,6 +1,5 @@
 package org.capstone.my_supplier.supplier;
 
-import jdk.jfr.Description;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -60,7 +59,7 @@ class ProductServiceTest {
         Product product = new Product("1122", "Mango", "3344", "Flugmango", Category.OBST);
 
         ProductRepo productRepo = mock(ProductRepo.class);
-        when(productRepo.existsById(product.id())).thenReturn(true);
+        when(productRepo.existsById(product.productId())).thenReturn(true);
 
         when(productRepo.save(any(Product.class)))
                 .thenReturn(product);
@@ -76,13 +75,13 @@ class ProductServiceTest {
         Product product = new Product("8899 ", "Oregano", "6868", "Bio", Category.KRAEUTER);
 
         ProductRepo productRepo = mock(ProductRepo.class);
-        when(productRepo.existsById(product.id())).thenReturn(true);
+        when(productRepo.existsById(product.productId())).thenReturn(true);
 
-        doNothing().when(productRepo).deleteById(product.id());
+        doNothing().when(productRepo).deleteById(product.productId());
 
         ProductService productService = new ProductService(productRepo);
 
-        productService.deleteProduct(product.id());
-        verify(productRepo).deleteById(product.id());
+        productService.deleteProduct(product.productId());
+        verify(productRepo).deleteById(product.productId());
     }
 }

@@ -29,9 +29,9 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{productId}")
     public ResponseEntity<Product> updatedProduct(
-            @PathVariable String id,
+            @PathVariable String productId,
             @RequestBody Product product){
         Product updatedProductDetails = productService.editProduct(product);
         return ResponseEntity
@@ -39,9 +39,9 @@ public class ProductController {
                 .body(updatedProductDetails);
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable String id) {
-        boolean deleteSucceeded = productService.deleteProduct(id);
+    @DeleteMapping("{productId}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable String productId) {
+        boolean deleteSucceeded = productService.deleteProduct(productId);
         return new ResponseEntity<>(deleteSucceeded ? HttpStatus.NO_CONTENT : HttpStatus.NOT_FOUND);
     }
 }
