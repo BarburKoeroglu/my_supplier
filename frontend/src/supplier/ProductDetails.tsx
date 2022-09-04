@@ -18,9 +18,9 @@ import "./SingleProduct.css";
 
 type ProductDetailsProps = {
     products: Product[],
-    getAllProducts: (product: Product) =>void,
     editProduct: (product: Product) => void,
     deleteProduct: (id:string) =>void,
+    fetchAllProducts: (product:Product) =>void,
 }
 
 export default function ProductDetails(props: ProductDetailsProps) {
@@ -33,7 +33,6 @@ export default function ProductDetails(props: ProductDetailsProps) {
     const {id} = useParams();
 
     const product: Product = props.products.find(element => element.id === id)!;
-
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -53,10 +52,9 @@ export default function ProductDetails(props: ProductDetailsProps) {
                 category: category,
             };
             props.editProduct(updatedProduct)
-            toast.success("Die Änderungen wurden gespeichert.", {theme:"dark"});
+            toast.success("Die Änderungen wurden gespeichert.");
             setOpen(false);
         } else {
-
             toast.error("Änderung fehlgeschlagen!")
         }
     }
@@ -86,14 +84,12 @@ export default function ProductDetails(props: ProductDetailsProps) {
                 autoComplete="off"
             >
                 <div>
-                    <Button sx={{backgroundColor: '#1d721d'}} variant="contained" size={"small"} onClick={handleClickOpen}>Produkt ändern</Button>
-                    <Button sx={{backgroundColor: '#1d721d'}} variant="contained" size={"small"} onClick={() => props.deleteProduct(product.id)}>Produkt löschen</Button>
+                    <Button sx={{backgroundColor: '#1d721d', marginLeft: '20px'}} variant="contained" size={"small"} onClick={handleClickOpen}>Produkt bearbeiten</Button>
+                    <Button sx={{backgroundColor: '#1d721d', marginLeft: '20px'}} variant="contained" size={"small"} onClick={() => props.deleteProduct(product.id)}>Produkt löschen</Button>
                     <Dialog open={open} onClose={handleClose}>
-                        <DialogTitle sx={{backgroundColor: '#9CA3AF'}}>Produktdetails ändern</DialogTitle>
-                        <DialogContent sx={{backgroundColor: '#9CA3AF'}}>
-                            <DialogContentText>
-                                Please enter here the new Data
-                            </DialogContentText>
+                        <DialogTitle sx={{backgroundColor: '#e8e9ec'}} color={'#1d721d'} fontSize={"big"}>Produktdetails bearbeiten</DialogTitle>
+                        <DialogContent sx={{backgroundColor: '#e8e9ec'}}>
+                            <DialogContentText sx={{color: '#000'}}>Bitte geben Sie die Änderungen ein.</DialogContentText>
                             <TextField
                                 autoFocus
                                 margin="dense"
@@ -101,6 +97,7 @@ export default function ProductDetails(props: ProductDetailsProps) {
                                 type="text"
                                 fullWidth
                                 variant="standard"
+                                defaultValue={product?.productName}
                                 onChange={editProductName}
                             />
                             <TextField
@@ -110,6 +107,7 @@ export default function ProductDetails(props: ProductDetailsProps) {
                                 type="text"
                                 fullWidth
                                 variant="standard"
+                                defaultValue={product?.itemNumber}
                                 onChange={editItemNumber}
                             />
                             <TextField
@@ -119,9 +117,11 @@ export default function ProductDetails(props: ProductDetailsProps) {
                                 type="text"
                                 fullWidth
                                 variant="standard"
+                                defaultValue={product?.description}
                                 onChange={editDescription}
                             />
                             <TextField
+                                margin="dense"
                                 id="Category"
                                 select
                                 label="Select"
@@ -139,9 +139,9 @@ export default function ProductDetails(props: ProductDetailsProps) {
                                 <MenuItem key={"Trockensortiment"} value={Category.TROCKENSORTIMENT}> TROCKENSORTIMENT </MenuItem>
                             </TextField>
                         </DialogContent>
-                        <DialogActions sx={{backgroundColor: '#9CA3AF'}}>
-                            <Button onClick={handleClose} sx={{color: '#4B5563'}}>Zurück</Button>
-                            <Button onClick={handleEditProduct} sx={{color: '#4B5563'}}>Speichern</Button>
+                        <DialogActions sx={{backgroundColor: '#1d721d'}}>
+                            <Button onClick={handleClose} sx={{color: '#e8e9ec'}}>Zurück</Button>
+                            <Button onClick={handleEditProduct} sx={{color: '#e8e9ec'}}>Speichern</Button>
                         </DialogActions>
                     </Dialog>
                 </div>
