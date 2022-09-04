@@ -20,7 +20,9 @@ public class ProductService {
                 newProduct.productName(),
                 newProduct.itemNumber(),
                 newProduct.description(),
-                newProduct.category()
+                newProduct.category(),
+                newProduct.quantity(),
+                newProduct.measurementUnit()
         ));
     }
 

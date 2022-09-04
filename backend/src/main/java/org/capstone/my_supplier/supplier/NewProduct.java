@@ -1,4 +1,7 @@
 package org.capstone.my_supplier.supplier;
 
-public record NewProduct (String productName, String itemNumber, String description, Category category){
+import org.capstone.my_supplier.customer.MeasurementUnit;
+
+public record NewProduct (String productName, String itemNumber, String description, Category category, String quantity,
+                          MeasurementUnit measurementUnit){
 }
