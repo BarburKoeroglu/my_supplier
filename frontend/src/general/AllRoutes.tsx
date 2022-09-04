@@ -15,7 +15,7 @@ export default function AllRoutes(){
             <Route path={"/supplier/products"} element={<ProductList products={productHook.products}
                                                                      addProduct={productHook.addProduct}/>}/>
             <Route path={"/supplier/products/:id"} element={<ProductDetails products={productHook.products}
-                                                                            getAllProducts={productHook.getAllProducts}
+                                                                            fetchAllProducts={productHook.fetchAllProducts}
                                                                             editProduct={productHook.editProduct}
                                                                             deleteProduct={productHook.deleteProduct}/>}/>
         </Routes>

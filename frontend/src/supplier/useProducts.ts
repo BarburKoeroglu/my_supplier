@@ -2,11 +2,12 @@ import {useEffect, useState} from "react";
 import {Product} from "./Product";
 import {NewProduct} from "./NewProduct";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 export default function useProducts() {
 
     const [products, setProducts] = useState<Product[]>([]);
-
+    const navigate = useNavigate();
     useEffect(() => {fetchAllProducts()},[]);
 
     const addProduct = (newProduct: NewProduct) => {
@@ -24,24 +25,20 @@ export default function useProducts() {
             .then((data) => setProducts(data))
     }
 
-    const getAllProducts = () =>{
-        axios.get("/supplier/products")
-            .then(response => {
-                return response.data
-            })
-    }
-
-    const editProduct = (product:Product)=>{
+        const editProduct = (product:Product)=>{
         axios.put("/supplier/products/" + product.id, product)
             .then((response) => response.data)
-            .then((data)=>setProducts(data))
-            .then(getAllProducts)
+            .then(fetchAllProducts)
+            .then(() => navigate("/supplier/products/" + product.id))
+
+
     }
 
     const deleteProduct = (id: string | undefined) => {
         return axios.delete(`/supplier/products/${id}`)
-            .then(getAllProducts)
+            .then(() => navigate("/supplier/products"))
+            .then(fetchAllProducts)
     }
 
-    return {products, addProduct, getAllProducts, editProduct, deleteProduct}
+    return {products, addProduct, fetchAllProducts, editProduct, deleteProduct}
 }
