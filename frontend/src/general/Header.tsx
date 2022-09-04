@@ -11,7 +11,7 @@ export default function Header() {
     return (
         <header>
             <div>
-                <img className={"logo"} src="../img.png" alt={"logo"}/>
+                <img className={"logo"} src="../logo-truck.png" alt={"logo"}/>
                 <h1><span>my</span>Supplier</h1>
             </div>
             <nav className={"menu"}>
