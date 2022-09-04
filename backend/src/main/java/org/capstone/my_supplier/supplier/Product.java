@@ -1,6 +1,5 @@
 package org.capstone.my_supplier.supplier;
 
-import org.capstone.my_supplier.customer.MeasurementUnit;
 import org.springframework.data.annotation.Id;
 
 public record Product(

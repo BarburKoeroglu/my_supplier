@@ -30,8 +30,6 @@ public class ProductService {
         return productRepo.findAll();
     }
 
-    public Product getSingleProduct(String productId){return productRepo.getSingleProduct(productId);}
-
     public Product editProduct(Product updatedProduct){
         productRepo.save(updatedProduct);
 
