@@ -10,7 +10,7 @@ public class ProductService {
 
     private final ProductRepo productRepo;
 
-    ProductService(ProductRepo productRepo){
+    public ProductService(ProductRepo productRepo){
         this.productRepo = productRepo;
     }
 
@@ -28,6 +28,10 @@ public class ProductService {
 
     public List<Product> getAllProducts(){
         return productRepo.findAll();
+    }
+
+    public Product getSingleProduct(String productId) {
+        return productRepo.getProduct(productId);
     }
 
     public Product editProduct(Product updatedProduct){
