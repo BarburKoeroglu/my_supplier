@@ -1,3 +1,3 @@
 import {Product} from "./Product";
 
-export type NewProduct = Omit<Product, "id">;
+export type NewProduct = Omit<Product, "productId">;
