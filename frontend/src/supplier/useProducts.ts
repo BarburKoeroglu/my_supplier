@@ -26,8 +26,8 @@ export default function useProducts() {
     }
 
         const editProduct = (product:Product)=>{
-        axios.put("/supplier/products/" + product.id, product)
-            .then(() => navigate("/supplier/products/" + product.id))
+        axios.put("/supplier/products/" + product.productId, product)
+            .then(() => navigate("/supplier/products/" + product.productId))
             .then(fetchAllProducts)
     }
 
