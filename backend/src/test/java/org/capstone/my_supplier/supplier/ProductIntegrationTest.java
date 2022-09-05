@@ -80,14 +80,14 @@ class ProductIntegrationTest {
                 .getContentAsString();
 
         Product saveProductResult = objectMapper.readValue(saveResult, Product.class);
-        String id = saveProductResult.id();
+        String id = saveProductResult.productId();
 
         mockMvc.perform(
                 put("/supplier/products/" + id)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
-                                "id": "<ID>",
+                                "productId": "<ID>",
                                 "productName": "Erdbeeren",
                                 "itemNumber": "5566",
                                 "description": "neue Beschreibung",
@@ -98,7 +98,7 @@ class ProductIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json("""
                                 {
-                                "id": "<ID>",
+                                "productId": "<ID>",
                                 "productName": "Erdbeeren",
                                 "itemNumber": "5566",
                                 "description": "neue Beschreibung",
@@ -125,7 +125,7 @@ class ProductIntegrationTest {
         ).andReturn().getResponse().getContentAsString();
 
         Product saveProductResult = objectMapper.readValue(saveResult, Product.class);
-        String id = saveProductResult.id();
+        String id = saveProductResult.productId();
 
         mockMvc.perform(delete("http://localhost:8080/supplier/products/" + id))
                 .andExpect(status().is(204));

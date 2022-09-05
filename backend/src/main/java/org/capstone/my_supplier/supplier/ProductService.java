@@ -20,7 +20,9 @@ public class ProductService {
                 newProduct.productName(),
                 newProduct.itemNumber(),
                 newProduct.description(),
-                newProduct.category()
+                newProduct.category(),
+                newProduct.quantity(),
+                newProduct.measurementUnit()
         ));
     }
 
@@ -34,9 +36,9 @@ public class ProductService {
         return updatedProduct;
 }
 
-    public boolean deleteProduct(String id) {
-        if (productRepo.existsById(id)) {
-            productRepo.deleteById(id);
+    public boolean deleteProduct(String productId) {
+        if (productRepo.existsById(productId)) {
+            productRepo.deleteById(productId);
             return true;
         }
         return false;

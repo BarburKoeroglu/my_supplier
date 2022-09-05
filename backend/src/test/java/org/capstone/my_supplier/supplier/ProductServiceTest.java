@@ -1,6 +1,5 @@
 package org.capstone.my_supplier.supplier;
 
-import jdk.jfr.Description;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -20,12 +19,12 @@ class ProductServiceTest {
     @Test
     void addProduct() {
 
-        Product product = new Product(UUID.randomUUID().toString(), "Erdbeeren", "1515", "neue Ernte", Category.OBST);
+        Product product = new Product(UUID.randomUUID().toString(), "Erdbeeren", "1515", "neue Ernte", Category.OBST, "5", MeasurementUnit.STCK);
 
         when(productRepo.save(any(Product.class)))
                 .thenReturn(product);
 
-        Product actual = productService.addProduct(new NewProduct("Erdbeeren", "1515", "neue Ernte", Category.OBST));
+        Product actual = productService.addProduct(new NewProduct("Erdbeeren", "1515", "neue Ernte", Category.OBST, "5", MeasurementUnit.STCK));
         Assertions.assertEquals(product, actual);
     }
 
@@ -33,10 +32,10 @@ class ProductServiceTest {
     @Test
     void getAllProducts(){
         List<Product> products = List.of(
-                new Product("1122", "Mango", "3344", "Flugmango", Category.OBST),
-                new Product("1133", "Broccoli", "3355", "Spargelbroccoli", Category.GEMUESE),
-                new Product("1144", "Kirschen", "3366", "Knubber", Category.OBST),
-                new Product("1155", "Tomaten", "3377", "San Marzano", Category.GEMUESE)
+                new Product("1122", "Mango", "3344", "Flugmango", Category.OBST, "5", MeasurementUnit.STCK),
+                new Product("1133", "Broccoli", "3355", "Spargelbroccoli", Category.GEMUESE, "5", MeasurementUnit.STCK),
+                new Product("1144", "Kirschen", "3366", "Knubber", Category.OBST, "5", MeasurementUnit.STCK),
+                new Product("1155", "Tomaten", "3377", "San Marzano", Category.GEMUESE, "5", MeasurementUnit.STCK)
         );
         ProductRepo productRepo = mock(ProductRepo.class);
         when(productRepo.findAll()).thenReturn(products);
@@ -45,10 +44,10 @@ class ProductServiceTest {
 
         List<Product> actualResult = productService.getAllProducts();
         List<Product> expectedResult = List.of(
-                new Product("1122", "Mango", "3344", "Flugmango", Category.OBST),
-                new Product("1133", "Broccoli", "3355", "Spargelbroccoli", Category.GEMUESE),
-                new Product("1144", "Kirschen", "3366", "Knubber", Category.OBST),
-                new Product("1155", "Tomaten", "3377", "San Marzano", Category.GEMUESE)
+                new Product("1122", "Mango", "3344", "Flugmango", Category.OBST, "5", MeasurementUnit.STCK),
+                new Product("1133", "Broccoli", "3355", "Spargelbroccoli", Category.GEMUESE, "5", MeasurementUnit.STCK),
+                new Product("1144", "Kirschen", "3366", "Knubber", Category.OBST, "5", MeasurementUnit.STCK),
+                new Product("1155", "Tomaten", "3377", "San Marzano", Category.GEMUESE, "5", MeasurementUnit.STCK)
         );
 
         assertThat(actualResult).hasSameElementsAs(expectedResult);
@@ -57,10 +56,10 @@ class ProductServiceTest {
 
     @Test
     void editProduct() {
-        Product product = new Product("1122", "Mango", "3344", "Flugmango", Category.OBST);
+        Product product = new Product("1122", "Mango", "3344", "Flugmango", Category.OBST, "5", MeasurementUnit.STCK);
 
         ProductRepo productRepo = mock(ProductRepo.class);
-        when(productRepo.existsById(product.id())).thenReturn(true);
+        when(productRepo.existsById(product.productId())).thenReturn(true);
 
         when(productRepo.save(any(Product.class)))
                 .thenReturn(product);
@@ -73,16 +72,16 @@ class ProductServiceTest {
 
     @Test
     void deleteProduct() {
-        Product product = new Product("8899 ", "Oregano", "6868", "Bio", Category.KRAEUTER);
+        Product product = new Product("8899 ", "Oregano", "6868", "Bio", Category.KRAEUTER, "5", MeasurementUnit.STCK);
 
         ProductRepo productRepo = mock(ProductRepo.class);
-        when(productRepo.existsById(product.id())).thenReturn(true);
+        when(productRepo.existsById(product.productId())).thenReturn(true);
 
-        doNothing().when(productRepo).deleteById(product.id());
+        doNothing().when(productRepo).deleteById(product.productId());
 
         ProductService productService = new ProductService(productRepo);
 
-        productService.deleteProduct(product.id());
-        verify(productRepo).deleteById(product.id());
+        productService.deleteProduct(product.productId());
+        verify(productRepo).deleteById(product.productId());
     }
 }

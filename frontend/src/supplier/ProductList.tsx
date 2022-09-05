@@ -19,6 +19,7 @@ export default function ProductList(props: ProductListProps) {
             <h2>Produktliste</h2>
             <AddNewProduct addNewProduct={props.addProduct}/>
             <table>
+                <tbody>
                 <tr>
                     <th>Produkt</th>
                     <th>Artikelnummer</th>
@@ -26,11 +27,14 @@ export default function ProductList(props: ProductListProps) {
                     <th>Kategorie</th>
                 </tr>
                 {props.products.map((product) =>
-                    <tr key={product.id}>
+                    <tr key={product.productId}>
                         <SingleProduct product={product}/>
-                        <button onClick={() => navigate("/supplier/products/" + product.id)}>Produktdetails</button>
+                        <td>
+                            <button onClick={() => navigate("/supplier/products/" + product.productId)}>Produktdetails</button>
+                        </td>
                     </tr>
                 )}
+                </tbody>
             </table>
         </span>
     )
