@@ -19,7 +19,7 @@ import "./SingleProduct.css";
 type ProductDetailsProps = {
     products: Product[],
     editProduct: (product: Product) => void,
-    deleteProduct: (id:string) =>void,
+    deleteProduct: (productId:string) =>void,
     fetchAllProducts: (product:Product) =>void,
 }
 
@@ -30,9 +30,9 @@ export default function ProductDetails(props: ProductDetailsProps) {
     const [description, setDescription] = useState('');
     const [category, setCategory] = useState<Category>();
     const [open, setOpen] = React.useState(false);
-    const {id} = useParams();
+    const {productId} = useParams();
 
-    const product: Product = props.products.find(element => element.id === id)!;
+    const product: Product = props.products.find(element => element.productId === productId)!;
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -45,7 +45,7 @@ export default function ProductDetails(props: ProductDetailsProps) {
     const handleEditProduct = () => {
         if (props.products && product) {
             const updatedProduct: Product = {
-                id: product.id,
+                productId: product.productId,
                 productName: productName,
                 itemNumber: itemNumber,
                 description: description,
@@ -85,7 +85,7 @@ export default function ProductDetails(props: ProductDetailsProps) {
             >
                 <div>
                     <Button sx={{backgroundColor: '#1d721d', marginLeft: '20px'}} variant="contained" size={"small"} onClick={handleClickOpen}>Produkt bearbeiten</Button>
-                    <Button sx={{backgroundColor: '#1d721d', marginLeft: '20px'}} variant="contained" size={"small"} onClick={() => props.deleteProduct(product.id)}>Produkt löschen</Button>
+                    <Button sx={{backgroundColor: '#1d721d', marginLeft: '20px'}} variant="contained" size={"small"} onClick={() => props.deleteProduct(product.productId)}>Produkt löschen</Button>
                     <Dialog open={open} onClose={handleClose}>
                         <DialogTitle sx={{backgroundColor: '#e8e9ec'}} color={'#1d721d'} fontSize={"big"}>Produktdetails bearbeiten</DialogTitle>
                         <DialogContent sx={{backgroundColor: '#e8e9ec'}}>
@@ -133,10 +133,10 @@ export default function ProductDetails(props: ProductDetailsProps) {
                                 helperText="Bitte Kategorie wählen"
                                 variant={"standard"}
                             >
-                                <MenuItem key={"Obst"} value={Category.OBST}> OBST </MenuItem>
-                                <MenuItem key={"Gemuese"} value={Category.GEMUESE}> GEMUESE </MenuItem>
-                                <MenuItem key={"Kraeuter"} value={Category.KRAEUTER}> KRAUTER </MenuItem>
-                                <MenuItem key={"Trockensortiment"} value={Category.TROCKENSORTIMENT}> TROCKENSORTIMENT </MenuItem>
+                                <MenuItem key={"Obst"} value={Category.OBST}>Obst</MenuItem>
+                                <MenuItem key={"Gemuese"} value={Category.GEMUESE}>Gemüse</MenuItem>
+                                <MenuItem key={"Kraeuter"} value={Category.KRAEUTER}>Kräuter</MenuItem>
+                                <MenuItem key={"Trockensortiment"} value={Category.TROCKENSORTIMENT}>Trockensortiment</MenuItem>
                             </TextField>
                         </DialogContent>
                         <DialogActions sx={{backgroundColor: '#1d721d'}}>
