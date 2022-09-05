@@ -26,12 +26,12 @@ public class ProductService {
         ));
     }
 
-    public List<Product> getAllProducts(){
-        return productRepo.findAll();
+    public Product getSingleProduct(String productId) {
+        return productRepo.getSingleProduct(productId);
     }
 
-    public Product getSingleProduct(String productId) {
-        return productRepo.getProduct(productId);
+    public List<Product> getAllProducts(){
+        return productRepo.findAll();
     }
 
     public Product editProduct(Product updatedProduct){
