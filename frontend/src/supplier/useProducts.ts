@@ -27,11 +27,8 @@ export default function useProducts() {
 
         const editProduct = (product:Product)=>{
         axios.put("/supplier/products/" + product.id, product)
-            .then((response) => response.data)
             .then(() => navigate("/supplier/products/" + product.id))
             .then(fetchAllProducts)
-
-
     }
 
     const deleteProduct = (id: string | undefined) => {

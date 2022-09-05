@@ -1,8 +1,8 @@
 export enum MeasurementUnit{
-    ANZAHL = "Anzahl",
-    KISTE = "Kiste",
-    KG = "kg",
-    STCK = "Stck",
-    BUND = "Bund",
-    TOPF = "Topf",
+    ANZAHL = "ANZAHL",
+    KISTE = "KISTE",
+    KG = "KG",
+    STCK = "STCK",
+    BUND = "BUND",
+    TOPF = "TOPF",
 }
