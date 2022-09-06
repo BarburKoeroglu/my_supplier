@@ -1,5 +1,6 @@
 package org.capstone.my_supplier.supplier;
 
+import org.capstone.my_supplier.exception.ProductNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class ProductService {
     }
 
     public Product getSingleProduct(String productId) {
-        return productRepo.getSingleProduct(productId);
+        return productRepo.findById(productId).orElseThrow(() -> new ProductNotFoundException(productId));
     }
 
     public List<Product> getAllProducts(){

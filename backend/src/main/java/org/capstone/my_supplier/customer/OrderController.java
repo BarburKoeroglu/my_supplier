@@ -11,7 +11,7 @@ public class OrderController {
 
     public OrderController(OrderService orderService) {this.orderService = orderService;}
 
-    @PostMapping("{orderId}")
+    @PostMapping("/{orderId}")
     public void addOrder(
             @PathVariable String orderId,
             @RequestBody List<String> productIds) {

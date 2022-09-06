@@ -9,25 +9,25 @@ import java.util.List;
 
 @Service
 public class OrderService {
-        private final ProductService productService;
-        private final OrderRepo orderRepo;
+    private final ProductService productService;
+    private final OrderRepo orderRepo;
 
-        public OrderService(
-                ProductService productService,
-                OrderRepo orderRepo) {
-            this.productService = productService;
-            this.orderRepo = orderRepo;
+    public OrderService(
+            ProductService productService,
+            OrderRepo orderRepo) {
+        this.productService = productService;
+        this.orderRepo = orderRepo;
+    }
+
+    public void addOrder(String orderId, List<String> productIds) {
+        List<Product> products = new ArrayList<>();
+        for (String productId : productIds) {
+            Product product = productService.getSingleProduct(productId);
+            products.add(product);
         }
 
-        public void addOrder(String orderId, List<String> productIds) {
-            List<Product> products = new ArrayList<>();
-            for(String productId : productIds) {
-                Product product = productService.getSingleProduct(productId);
-                products.add(product);
-            }
+        Order order = new Order(orderId, products);
 
-            Order order = new Order(orderId, products);
-
-            orderRepo.addOrder(order);
-        }
+        orderRepo.addOrder(order);
+    }
 }
