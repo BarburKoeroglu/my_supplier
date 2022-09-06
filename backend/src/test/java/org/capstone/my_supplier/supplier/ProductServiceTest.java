@@ -10,7 +10,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-
 class ProductServiceTest {
 
     ProductRepo productRepo = mock(ProductRepo.class);
@@ -27,7 +26,6 @@ class ProductServiceTest {
         Product actual = productService.addProduct(new NewProduct("Erdbeeren", "1515", "neue Ernte", Category.OBST, "5", MeasurementUnit.STUECK));
         Assertions.assertEquals(product, actual);
     }
-
 
     @Test
     void getAllProducts(){
