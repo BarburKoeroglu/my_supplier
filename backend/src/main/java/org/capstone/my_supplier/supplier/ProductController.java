@@ -25,14 +25,19 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<Product> listAllProducts(){
+    public List<Product> listAllProducts() {
         return productService.getAllProducts();
+    }
+
+    @GetMapping("/{productId}")
+    public Product getSingleProduct(@PathVariable String productId) {
+        return productService.getSingleProduct(productId);
     }
 
     @PutMapping("/{productId}")
     public ResponseEntity<Product> updatedProduct(
             @PathVariable String productId,
-            @RequestBody Product product){
+            @RequestBody Product product) {
         Product updatedProductDetails = productService.editProduct(product);
         return ResponseEntity
                 .status(HttpStatus.OK)

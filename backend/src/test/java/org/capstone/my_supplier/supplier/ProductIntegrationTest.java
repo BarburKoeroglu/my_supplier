@@ -1,6 +1,7 @@
 package org.capstone.my_supplier.supplier;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.capstone.my_supplier.exception.ProductNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,15 +53,49 @@ class ProductIntegrationTest {
                         """));
     }
 
+    @Test
+    void getSingleProduct() throws Exception {
+        String saveResult = mockMvc.perform(
+                        post("/supplier/products")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("""
+                                        {
+                                        "productName": "Erdbeeren",
+                                        "itemNumber": "5566",
+                                        "description": "Herkunft Deutschland",
+                                        "category": "OBST"
+                                        }
+                                        """)
+                ).andExpect(status().isCreated())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        Product saveProductResult = objectMapper.readValue(saveResult, Product.class);
+        String productId = saveProductResult.productId();
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/supplier/products/" + productId))
+                .andExpect(status().is(200))
+                .andExpect(content().json("""
+                        {
+                            "productId": "<ID>",
+                            "productName": "Erdbeeren",
+                            "itemNumber": "5566",
+                            "description": "Herkunft Deutschland",
+                            "category": "OBST"
+                        }
+                        """.replaceFirst("<ID>", productId)));
+    }
+
     @DirtiesContext
     @Test
     void editProduct() throws Exception {
         String saveResult = mockMvc.perform(
-                post("/supplier/products")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("""
-                        {
-                        "productName": "Erdbeeren",
+                        post("/supplier/products")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("""
+                                        {
+                                        "productName": "Erdbeeren",
                         "itemNumber": "5566",
                         "description": "Herkunft Deutschland",
                         "category": "OBST"
