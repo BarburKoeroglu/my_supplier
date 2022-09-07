@@ -16,8 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.List;
-
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -52,5 +51,15 @@ class OrderIntegrationTest {
         String actualId = objectMapper.readValue(content, Order.class).orderId();
         Assertions.assertEquals("""
                 {"orderId":"<ID>","products":[{"productId":"22","productName":"PName","itemNumber":"225588","description":"ddd","category":"OBST","quantity":"2","measurementUnit":"BUND"},{"productId":"23","productName":"PName2","itemNumber":"225599","description":"ddd","category":"KRAEUTER","quantity":"2","measurementUnit":"BUND"}]}""".replaceFirst("<ID>", actualId), content);
+    }
+
+    @DirtiesContext
+    @Test
+    void listAllOrders() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/customer/orders"))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        []
+                        """));
     }
 }
