@@ -9,5 +9,4 @@ public class IdUtil {
     public String generateUUId() {
         return UUID.randomUUID().toString();
     }
-
 }

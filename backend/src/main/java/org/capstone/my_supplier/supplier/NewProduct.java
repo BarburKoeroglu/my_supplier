@@ -7,5 +7,4 @@ public record NewProduct(
         Category category,
         String quantity,
         MeasurementUnit measurementUnit) {
-
 }

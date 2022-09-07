@@ -49,7 +49,6 @@ class ProductServiceTest {
         );
 
         assertThat(actualResult).hasSameElementsAs(expectedResult);
-
     }
 
     @Test
