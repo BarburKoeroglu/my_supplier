@@ -1,6 +1,7 @@
 package org.capstone.my_supplier.supplier;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.capstone.my_supplier.customer.Order;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -26,19 +28,31 @@ class ProductIntegrationTest {
     @Autowired
     ObjectMapper objectMapper;
 
+    @Autowired
+    ProductRepo productRepo;
+
     @DirtiesContext
     @Test
-    void addProduct() throws Exception{
+    void addProduct() throws Exception {
 
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/supplier/products")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("""
-                        {"productName":"Erdbeeren"}
-                        """))
-                .andExpect(status().is(201))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                "productName":"Erdbeeren",
+                                "itemNumber": "225588",
+                                "description": "ddd",
+                                "category": "OBST",
+                                "quantity": "2",
+                                "measurementUnit": "BUND"
+                                }
+                                """))
+                .andExpect(status().isCreated())
                 .andReturn();
         String content = result.getResponse().getContentAsString();
-        Assertions.assertTrue(content.contains("Erdbeeren"));
+        String actualId = objectMapper.readValue(content, Product.class).productId();
+        assertThat("""
+                {"productId":"<ID>","productName":"Erdbeeren","itemNumber":"225588","description":"ddd","category":"OBST","quantity":"2","measurementUnit":"BUND"}""".replaceFirst("<ID>", actualId)).isEqualTo(content);
     }
 
     @DirtiesContext
@@ -52,15 +66,49 @@ class ProductIntegrationTest {
                         """));
     }
 
+    @Test
+    void getSingleProduct() throws Exception {
+        String saveResult = mockMvc.perform(
+                        post("/supplier/products")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("""
+                                        {
+                                        "productName": "Erdbeeren",
+                                        "itemNumber": "5566",
+                                        "description": "Herkunft Deutschland",
+                                        "category": "OBST"
+                                        }
+                                        """)
+                ).andExpect(status().isCreated())
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        Product saveProductResult = objectMapper.readValue(saveResult, Product.class);
+        String productId = saveProductResult.productId();
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/supplier/products/" + productId))
+                .andExpect(status().is(200))
+                .andExpect(content().json("""
+                        {
+                            "productId": "<ID>",
+                            "productName": "Erdbeeren",
+                            "itemNumber": "5566",
+                            "description": "Herkunft Deutschland",
+                            "category": "OBST"
+                        }
+                        """.replaceFirst("<ID>", productId)));
+    }
+
     @DirtiesContext
     @Test
     void editProduct() throws Exception {
         String saveResult = mockMvc.perform(
-                post("/supplier/products")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("""
-                        {
-                        "productName": "Erdbeeren",
+                        post("/supplier/products")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("""
+                                        {
+                                        "productName": "Erdbeeren",
                         "itemNumber": "5566",
                         "description": "Herkunft Deutschland",
                         "category": "OBST"
@@ -80,10 +128,10 @@ class ProductIntegrationTest {
                 .getContentAsString();
 
         Product saveProductResult = objectMapper.readValue(saveResult, Product.class);
-        String id = saveProductResult.productId();
+        String productId = saveProductResult.productId();
 
         mockMvc.perform(
-                put("/supplier/products/" + id)
+                        put("/supplier/products/" + productId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
@@ -93,7 +141,7 @@ class ProductIntegrationTest {
                                 "description": "neue Beschreibung",
                                 "category": "OBST"
                                 }
-                                 """.replaceFirst("<ID>", id))
+                                 """.replaceFirst("<ID>", productId))
                 )
                 .andExpect(status().isOk())
                 .andExpect(content().json("""
@@ -104,7 +152,7 @@ class ProductIntegrationTest {
                                 "description": "neue Beschreibung",
                                 "category": "OBST"
                                 }
-                        """.replaceFirst("<ID>", id)));
+                        """.replaceFirst("<ID>", productId)));
     }
 
     @DirtiesContext
@@ -125,9 +173,9 @@ class ProductIntegrationTest {
         ).andReturn().getResponse().getContentAsString();
 
         Product saveProductResult = objectMapper.readValue(saveResult, Product.class);
-        String id = saveProductResult.productId();
+        String productId = saveProductResult.productId();
 
-        mockMvc.perform(delete("http://localhost:8080/supplier/products/" + id))
+        mockMvc.perform(delete("http://localhost:8080/supplier/products/" + productId))
                 .andExpect(status().is(204));
 
         mockMvc.perform(get("http://localhost:8080/supplier/products"))

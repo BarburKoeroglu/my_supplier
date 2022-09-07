@@ -10,7 +10,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-
 class ProductServiceTest {
 
     ProductRepo productRepo = mock(ProductRepo.class);
@@ -19,23 +18,22 @@ class ProductServiceTest {
     @Test
     void addProduct() {
 
-        Product product = new Product(UUID.randomUUID().toString(), "Erdbeeren", "1515", "neue Ernte", Category.OBST, "5", MeasurementUnit.STCK);
+        Product product = new Product(UUID.randomUUID().toString(), "Erdbeeren", "1515", "neue Ernte", Category.OBST, "5", MeasurementUnit.STUECK);
 
         when(productRepo.save(any(Product.class)))
                 .thenReturn(product);
 
-        Product actual = productService.addProduct(new NewProduct("Erdbeeren", "1515", "neue Ernte", Category.OBST, "5", MeasurementUnit.STCK));
+        Product actual = productService.addProduct(new NewProduct("Erdbeeren", "1515", "neue Ernte", Category.OBST, "5", MeasurementUnit.STUECK));
         Assertions.assertEquals(product, actual);
     }
-
 
     @Test
     void getAllProducts(){
         List<Product> products = List.of(
-                new Product("1122", "Mango", "3344", "Flugmango", Category.OBST, "5", MeasurementUnit.STCK),
-                new Product("1133", "Broccoli", "3355", "Spargelbroccoli", Category.GEMUESE, "5", MeasurementUnit.STCK),
-                new Product("1144", "Kirschen", "3366", "Knubber", Category.OBST, "5", MeasurementUnit.STCK),
-                new Product("1155", "Tomaten", "3377", "San Marzano", Category.GEMUESE, "5", MeasurementUnit.STCK)
+                new Product("1122", "Mango", "3344", "Flugmango", Category.OBST, "5", MeasurementUnit.STUECK),
+                new Product("1133", "Broccoli", "3355", "Spargelbroccoli", Category.GEMUESE, "5", MeasurementUnit.STUECK),
+                new Product("1144", "Kirschen", "3366", "Knubber", Category.OBST, "5", MeasurementUnit.STUECK),
+                new Product("1155", "Tomaten", "3377", "San Marzano", Category.GEMUESE, "5", MeasurementUnit.STUECK)
         );
         ProductRepo productRepo = mock(ProductRepo.class);
         when(productRepo.findAll()).thenReturn(products);
@@ -44,19 +42,18 @@ class ProductServiceTest {
 
         List<Product> actualResult = productService.getAllProducts();
         List<Product> expectedResult = List.of(
-                new Product("1122", "Mango", "3344", "Flugmango", Category.OBST, "5", MeasurementUnit.STCK),
-                new Product("1133", "Broccoli", "3355", "Spargelbroccoli", Category.GEMUESE, "5", MeasurementUnit.STCK),
-                new Product("1144", "Kirschen", "3366", "Knubber", Category.OBST, "5", MeasurementUnit.STCK),
-                new Product("1155", "Tomaten", "3377", "San Marzano", Category.GEMUESE, "5", MeasurementUnit.STCK)
+                new Product("1122", "Mango", "3344", "Flugmango", Category.OBST, "5", MeasurementUnit.STUECK),
+                new Product("1133", "Broccoli", "3355", "Spargelbroccoli", Category.GEMUESE, "5", MeasurementUnit.STUECK),
+                new Product("1144", "Kirschen", "3366", "Knubber", Category.OBST, "5", MeasurementUnit.STUECK),
+                new Product("1155", "Tomaten", "3377", "San Marzano", Category.GEMUESE, "5", MeasurementUnit.STUECK)
         );
 
         assertThat(actualResult).hasSameElementsAs(expectedResult);
-
     }
 
     @Test
     void editProduct() {
-        Product product = new Product("1122", "Mango", "3344", "Flugmango", Category.OBST, "5", MeasurementUnit.STCK);
+        Product product = new Product("1122", "Mango", "3344", "Flugmango", Category.OBST, "5", MeasurementUnit.STUECK);
 
         ProductRepo productRepo = mock(ProductRepo.class);
         when(productRepo.existsById(product.productId())).thenReturn(true);
@@ -72,7 +69,7 @@ class ProductServiceTest {
 
     @Test
     void deleteProduct() {
-        Product product = new Product("8899 ", "Oregano", "6868", "Bio", Category.KRAEUTER, "5", MeasurementUnit.STCK);
+        Product product = new Product("8899 ", "Oregano", "6868", "Bio", Category.KRAEUTER, "5", MeasurementUnit.STUECK);
 
         ProductRepo productRepo = mock(ProductRepo.class);
         when(productRepo.existsById(product.productId())).thenReturn(true);
