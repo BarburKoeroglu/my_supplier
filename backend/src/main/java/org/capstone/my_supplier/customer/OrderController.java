@@ -22,4 +22,14 @@ public class OrderController {
                 .status(HttpStatus.CREATED)
                 .body(savedOrder);
     }
+
+    @GetMapping
+    public List<Order> listAllOrders() {
+        return orderService.getAllOrders();
+    }
+
+    @GetMapping("/{orderId}")
+    public Order getSingleOrder(@PathVariable String orderId) {
+        return orderService.getSingleOrder(orderId);
+    }
 }
