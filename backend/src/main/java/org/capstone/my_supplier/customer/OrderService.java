@@ -1,6 +1,5 @@
 package org.capstone.my_supplier.customer;
 
-import org.capstone.my_supplier.exception.OrderNotFoundException;
 import org.capstone.my_supplier.supplier.Product;
 import org.capstone.my_supplier.supplier.ProductService;
 import org.capstone.my_supplier.util.IdUtil;
@@ -36,7 +35,7 @@ public class OrderService {
     }
 
     public Order getSingleOrder(String orderId) {
-        return orderRepo.findById(orderId).orElseThrow(() -> new OrderNotFoundException(orderId));
+        return orderRepo.findById(orderId).orElseThrow(() -> new RuntimeException(orderId));
     }
 
     public List<Order> getAllOrders() {
