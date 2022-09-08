@@ -44,7 +44,7 @@ public class ProductController {
                 .body(updatedProductDetails);
     }
 
-    @DeleteMapping("{productId}")
+    @DeleteMapping("/{productId}")
     public ResponseEntity<Void> deleteProduct(@PathVariable String productId) {
         boolean deleteSucceeded = productService.deleteProduct(productId);
         return new ResponseEntity<>(deleteSucceeded ? HttpStatus.NO_CONTENT : HttpStatus.NOT_FOUND);
