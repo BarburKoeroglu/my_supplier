@@ -1,11 +1,9 @@
 package org.capstone.my_supplier.customer;
 
-import org.capstone.my_supplier.supplier.Category;
-import org.capstone.my_supplier.supplier.MeasurementUnit;
-import org.capstone.my_supplier.supplier.Product;
-import org.capstone.my_supplier.supplier.ProductService;
+import org.capstone.my_supplier.supplier.*;
 import org.capstone.my_supplier.util.IdUtil;
 import org.junit.jupiter.api.Test;
+import org.mockito.internal.matchers.Or;
 
 import java.util.List;
 
@@ -66,6 +64,41 @@ class OrderServiceTest {
         );
 
         assertThat(actualResult).isEqualTo(expectedResult);
+    }
 
+    @Test
+    void editOrder() {
+        Product product1 = new Product("122", "Mango", "2288", "Beschreibung1", Category.OBST, "4", MeasurementUnit.KISTE);
+        Product product2 = new Product("133", "Kiwi", "3399", "Beschreibung2", Category.OBST, "8", MeasurementUnit.KG);
+
+        Order order = new Order("6789", (List.of(product1, product2)));
+
+        OrderRepo orderRepo = mock(OrderRepo.class);
+        when(orderRepo.existsById(order.orderId())).thenReturn(true);
+
+        when(orderRepo.save(new Order("6789", List.of(product1, product2)))).thenReturn(new Order("6789", List.of(product1, product2)));
+
+        OrderService orderService = new OrderService(productService, orderRepo, idUtil);
+        Order actualOrderResult = orderService.editOrder(order);
+
+        assertThat(actualOrderResult).isEqualTo(order);
+    }
+
+    @Test
+    void deleteProduct() {
+        Product product1 = new Product("122", "Mango", "2288", "Beschreibung1", Category.OBST, "4", MeasurementUnit.KISTE);
+        Product product2 = new Product("133", "Kiwi", "3399", "Beschreibung2", Category.OBST, "8", MeasurementUnit.KG);
+
+        Order order = new Order("6789", (List.of(product1, product2)));
+
+        OrderRepo orderRepo = mock(OrderRepo.class);
+        when(orderRepo.existsById(order.orderId())).thenReturn(true);
+
+        doNothing().when(orderRepo).deleteById(order.orderId());
+
+        OrderService orderService = new OrderService(productService, orderRepo, idUtil);
+
+        orderService.deleteOrder(order.orderId());
+        verify(orderRepo).deleteById(order.orderId());
     }
 }
