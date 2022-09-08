@@ -33,4 +33,12 @@ public class OrderService {
 
         return orderRepo.save(order);
     }
+
+    public Order getSingleOrder(String orderId) {
+        return orderRepo.findById(orderId).orElseThrow(() -> new RuntimeException(orderId));
+    }
+
+    public List<Order> getAllOrders() {
+        return orderRepo.findAll();
+    }
 }

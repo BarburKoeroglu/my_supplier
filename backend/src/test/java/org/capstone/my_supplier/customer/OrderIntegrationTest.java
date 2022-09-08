@@ -16,8 +16,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.List;
-
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -41,7 +41,7 @@ class OrderIntegrationTest {
 
         productRepo.save(product1);
         productRepo.save(product2);
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/customer/orders")
+        MvcResult result = mockMvc.perform(post("/customer/orders")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 ["22", "23"]
@@ -52,5 +52,49 @@ class OrderIntegrationTest {
         String actualId = objectMapper.readValue(content, Order.class).orderId();
         Assertions.assertEquals("""
                 {"orderId":"<ID>","products":[{"productId":"22","productName":"PName","itemNumber":"225588","description":"ddd","category":"OBST","quantity":"2","measurementUnit":"BUND"},{"productId":"23","productName":"PName2","itemNumber":"225599","description":"ddd","category":"KRAEUTER","quantity":"2","measurementUnit":"BUND"}]}""".replaceFirst("<ID>", actualId), content);
+    }
+
+    @DirtiesContext
+    @Test
+    void listAllOrders() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/customer/orders"))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        []
+                        """));
+    }
+
+    @DirtiesContext
+    @Test
+    void getSingleOrder() throws Exception {
+
+        Product product1 = new Product("2255", "Name1", "5588", "ddd", Category.OBST, "2", MeasurementUnit.BUND);
+        Product product2 = new Product("2366", "Name2", "6699", "xxx", Category.KRAEUTER, "5", MeasurementUnit.STUECK);
+        Product product3 = new Product("2477", "Name3", "7711", "yyy", Category.TROCKENSORTIMENT, "12", MeasurementUnit.KISTE);
+
+        productRepo.save(product1);
+        productRepo.save(product2);
+        productRepo.save(product3);
+
+        MvcResult orderResult = mockMvc.perform(
+                        post("/customer/orders")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("""
+                                        ["2255", "2366", "2477"]
+                                        """))
+                .andExpect(status().isCreated())
+                .andReturn();
+
+        String content = orderResult.getResponse().getContentAsString();
+        String orderId = objectMapper.readValue(content, Order.class).orderId();
+        System.out.println(orderId);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/customer/orders/" + orderId))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        {"orderId":"<ID>","products":[{"productId":"2255","productName":"Name1","itemNumber":"5588","description":"ddd","category":"OBST","quantity":"2","measurementUnit":"BUND"},
+                        {"productId":"2366","productName":"Name2","itemNumber":"6699","description":"xxx","category":"KRAEUTER","quantity":"5","measurementUnit":"STUECK"},
+                        {"productId":"2477","productName":"Name3","itemNumber":"7711","description":"yyy","category":"TROCKENSORTIMENT","quantity":"12","measurementUnit":"KISTE"}]}
+                        """.replaceFirst("<ID>", orderId)));
     }
 }
