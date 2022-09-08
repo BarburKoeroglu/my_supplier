@@ -27,7 +27,9 @@ public class ProductService {
     }
 
     public Product getSingleProduct(String productId) {
-        return productRepo.findById(productId).orElseThrow(() -> new RuntimeException(productId));
+        return productRepo
+                .findById(productId)
+                .orElseThrow(() -> new RuntimeException(productId));
     }
 
     public List<Product> getAllProducts(){
