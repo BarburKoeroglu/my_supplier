@@ -4,12 +4,14 @@ import org.capstone.my_supplier.supplier.*;
 import org.capstone.my_supplier.util.IdUtil;
 import org.junit.jupiter.api.Test;
 import org.mockito.internal.matchers.Or;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
+@DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
 class OrderServiceTest {
 
     ProductService productService = mock(ProductService.class);
