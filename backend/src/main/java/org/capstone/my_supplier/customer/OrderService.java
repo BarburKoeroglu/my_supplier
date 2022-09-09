@@ -35,10 +35,25 @@ public class OrderService {
     }
 
     public Order getSingleOrder(String orderId) {
-        return orderRepo.findById(orderId).orElseThrow(() -> new RuntimeException(orderId));
+        return orderRepo
+                .findById(orderId)
+                .orElseThrow(() -> new RuntimeException(orderId));
     }
 
     public List<Order> getAllOrders() {
         return orderRepo.findAll();
+    }
+
+    public Order editOrder(Order updatedOrder) {
+        orderRepo.save(updatedOrder);
+        return updatedOrder;
+    }
+
+    public boolean deleteOrder(String orderId) {
+        if (orderRepo.existsById(orderId)) {
+            orderRepo.deleteById(orderId);
+            return true;
+        }
+        return false;
     }
 }

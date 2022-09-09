@@ -32,4 +32,19 @@ public class OrderController {
     public Order getSingleOrder(@PathVariable String orderId) {
         return orderService.getSingleOrder(orderId);
     }
+
+    @PutMapping("/{orderId}")
+    public ResponseEntity<Order> updatedOrder(@PathVariable String orderId,
+                                              @RequestBody Order order) {
+        Order updatedOrderDetails = orderService.editOrder(order);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(updatedOrderDetails);
+    }
+
+    @DeleteMapping("/{orderId}")
+    public ResponseEntity<Void> deleteOrder(@PathVariable String orderId) {
+        boolean deleteOrderSucceeded = orderService.deleteOrder(orderId);
+        return new ResponseEntity<>(deleteOrderSucceeded ? HttpStatus.NO_CONTENT : HttpStatus.NOT_FOUND);
+    }
 }

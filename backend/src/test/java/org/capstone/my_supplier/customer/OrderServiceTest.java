@@ -1,17 +1,17 @@
 package org.capstone.my_supplier.customer;
 
-import org.capstone.my_supplier.supplier.Category;
-import org.capstone.my_supplier.supplier.MeasurementUnit;
-import org.capstone.my_supplier.supplier.Product;
-import org.capstone.my_supplier.supplier.ProductService;
+import org.capstone.my_supplier.supplier.*;
 import org.capstone.my_supplier.util.IdUtil;
 import org.junit.jupiter.api.Test;
+import org.mockito.internal.matchers.Or;
+import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
+@DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
 class OrderServiceTest {
 
     ProductService productService = mock(ProductService.class);
@@ -66,6 +66,44 @@ class OrderServiceTest {
         );
 
         assertThat(actualResult).isEqualTo(expectedResult);
+    }
 
+    @Test
+    void editOrder() {
+        Product product1 = new Product("122", "Mango", "2288", "Beschreibung1", Category.OBST, "4", MeasurementUnit.KISTE);
+        Product product2 = new Product("133", "Kiwi", "3399", "Beschreibung2", Category.OBST, "8", MeasurementUnit.KG);
+        Product product3 = new Product("14", "Möhren", "4411", "Beschreibung3", Category.OBST, "5", MeasurementUnit.STUECK);
+
+        Order order = new Order("6789", (List.of(product1, product2)));
+
+        OrderRepo orderRepo = mock(OrderRepo.class);
+        when(orderRepo.existsById(order.orderId())).thenReturn(true);
+
+        when(orderRepo.save(order))
+                .thenReturn(order);
+
+        OrderService orderService = new OrderService(productService, orderRepo, idUtil);
+        Order updatedOrder = new Order("6789", (List.of(product1, product3)));
+        Order actualOrderResult = orderService.editOrder(updatedOrder);
+
+        assertThat(actualOrderResult).isEqualTo(updatedOrder);
+    }
+
+    @Test
+    void deleteOrder() {
+        Product product1 = new Product("122", "Mango", "2288", "Beschreibung1", Category.OBST, "4", MeasurementUnit.KISTE);
+        Product product2 = new Product("133", "Kiwi", "3399", "Beschreibung2", Category.OBST, "8", MeasurementUnit.KG);
+
+        Order order = new Order("6789", (List.of(product1, product2)));
+
+        OrderRepo orderRepo = mock(OrderRepo.class);
+        when(orderRepo.existsById(order.orderId())).thenReturn(true);
+
+        doNothing().when(orderRepo).deleteById(order.orderId());
+
+        OrderService orderService = new OrderService(productService, orderRepo, idUtil);
+
+        orderService.deleteOrder(order.orderId());
+        verify(orderRepo).deleteById(order.orderId());
     }
 }
