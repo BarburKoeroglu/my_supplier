@@ -70,22 +70,25 @@ class OrderServiceTest {
     void editOrder() {
         Product product1 = new Product("122", "Mango", "2288", "Beschreibung1", Category.OBST, "4", MeasurementUnit.KISTE);
         Product product2 = new Product("133", "Kiwi", "3399", "Beschreibung2", Category.OBST, "8", MeasurementUnit.KG);
+        Product product3 = new Product("14", "Möhren", "4411", "Beschreibung3", Category.OBST, "5", MeasurementUnit.STUECK);
 
         Order order = new Order("6789", (List.of(product1, product2)));
 
         OrderRepo orderRepo = mock(OrderRepo.class);
         when(orderRepo.existsById(order.orderId())).thenReturn(true);
 
-        when(orderRepo.save(new Order("6789", List.of(product1, product2)))).thenReturn(new Order("6789", List.of(product1, product2)));
+        when(orderRepo.save(order))
+                .thenReturn(order);
 
         OrderService orderService = new OrderService(productService, orderRepo, idUtil);
-        Order actualOrderResult = orderService.editOrder(order);
+        Order updatedOrder = new Order("6789", (List.of(product1, product3)));
+        Order actualOrderResult = orderService.editOrder(updatedOrder);
 
-        assertThat(actualOrderResult).isEqualTo(order);
+        assertThat(actualOrderResult).isEqualTo(updatedOrder);
     }
 
     @Test
-    void deleteProduct() {
+    void deleteOrder() {
         Product product1 = new Product("122", "Mango", "2288", "Beschreibung1", Category.OBST, "4", MeasurementUnit.KISTE);
         Product product2 = new Product("133", "Kiwi", "3399", "Beschreibung2", Category.OBST, "8", MeasurementUnit.KG);
 

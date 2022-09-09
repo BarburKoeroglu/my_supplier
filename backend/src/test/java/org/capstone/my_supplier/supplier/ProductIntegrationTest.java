@@ -107,13 +107,13 @@ class ProductIntegrationTest {
                                 .content("""
                                         {
                                         "productName": "Erdbeeren",
-                        "itemNumber": "5566",
-                        "description": "Herkunft Deutschland",
-                        "category": "OBST"
-                        }
-                        """)
-        ).andExpect(status().isCreated())
-         .andExpect(content().json("""
+                                        "itemNumber": "5566",
+                                        "description": "Herkunft Deutschland",
+                                        "category": "OBST"
+                                        }
+                                        """)
+                ).andExpect(status().isCreated())
+                .andExpect(content().json("""
                         {
                         "productName": "Erdbeeren",
                         "itemNumber": "5566",
@@ -130,16 +130,16 @@ class ProductIntegrationTest {
 
         mockMvc.perform(
                         put("/supplier/products/" + productId)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                                {
-                                "productId": "<ID>",
-                                "productName": "Erdbeeren",
-                                "itemNumber": "5566",
-                                "description": "neue Beschreibung",
-                                "category": "OBST"
-                                }
-                                 """.replaceFirst("<ID>", productId))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("""
+                                        {
+                                        "productId": "<ID>",
+                                        "productName": "Erdbeeren",
+                                        "itemNumber": "5566",
+                                        "description": "neue Beschreibung",
+                                        "category": "OBST"
+                                        }
+                                         """.replaceFirst("<ID>", productId))
                 )
                 .andExpect(status().isOk())
                 .andExpect(content().json("""
