@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import SingleProduct from "./SingleProduct";
 import "./SingleProduct.css";
+import {MeasurementUnit} from "./MeasurementUnit";
 
 type ProductDetailsProps = {
     products: Product[],
@@ -29,6 +30,8 @@ export default function ProductDetails(props: ProductDetailsProps) {
     const [itemNumber, setItemNumber] = useState('');
     const [description, setDescription] = useState('');
     const [category, setCategory] = useState<Category>();
+    const [quantity, setQuantity] = useState("");
+    const [measurementUnit, setMeasurementUnit] = useState<MeasurementUnit>();
     const [open, setOpen] = React.useState(false);
     const {productId} = useParams();
 
@@ -50,6 +53,8 @@ export default function ProductDetails(props: ProductDetailsProps) {
                 itemNumber: itemNumber,
                 description: description,
                 category: category,
+                quantity: quantity,
+                measurementUnit: measurementUnit,
             };
             props.editProduct(updatedProduct)
             toast.success("Die Änderungen wurden gespeichert.");
