@@ -1,8 +1,8 @@
 import {OrderStatus} from "./OrderStatus";
-import {SingleProductToOrder} from "./SingleProductToOrder";
+import {Product} from "../supplier/Product";
 
 export type Order = {
     orderId: string,
-    singleProductToOrder: SingleProductToOrder,
-    orderStatus: OrderStatus,
+    products: Product[],
+    orderStatus?: OrderStatus,
 }
