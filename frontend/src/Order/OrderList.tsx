@@ -14,20 +14,23 @@ export default function OrderList(props: OrderListProps) {
     return (
         <span>
             <h2>Bestellungen</h2>
-
+            <button onClick={() => navigate("/customer/orders/newOrder")}>neue Bestellung</button>
             <table>
                 <tbody>
                 <tr>
                     <th>Bestellnummer</th>
-                    <th>Produkte</th>
+                    <th>Inhalte</th>
                     <th>Bestellstatus</th>
                 </tr>
                 {props.orders?.map((order) =>
                     <tr key={order.orderId}>
                         <SingleOrder order={order}/>
+                        <td>
+                            <button onClick={() => navigate("/customer/orders/" + order.orderId)}>Bestelldetails
+                            </button>
+                        </td>
                     </tr>
                 )}
-                <button onClick={() => navigate("/customer/orders/newOrder")}>neue Bestellung</button>
                 </tbody>
             </table>
         </span>

@@ -13,9 +13,9 @@ type AddNewOrderProps = {
 
 export default function AddNewOrderForm(props: AddNewOrderProps) {
 
-    const [products, setProducts] = useState<Product[]>([])
+    const [allProducts, setAllProducts] = useState<Product[]>([])
     const [orderStatus, setOrderStatus] = useState<OrderStatus>();
-    const [orderProducts, setOrderProducts] = useState<Product[]>(products);
+    const [productToAdd, setProductToAdd] = useState<Product[]>([]);
     const [quantity, setQuantity] = useState("");
     const [measurementUnit, setMeasurementUnit] = useState<MeasurementUnit>();
 
@@ -26,8 +26,7 @@ export default function AddNewOrderForm(props: AddNewOrderProps) {
         axios.get("/supplier/products")
             .then((response) => response.data)
             .then((data) => {
-                    setProducts(data);
-                    setOrderProducts(data)
+                setAllProducts(data);
                 }
             )
     }
@@ -35,16 +34,14 @@ export default function AddNewOrderForm(props: AddNewOrderProps) {
     const AddNewOrderSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        orderStatusChange();
-
         const order: NewOrder = {
-            products: products,
+            products: allProducts,
             orderStatus: orderStatus,
         }
 
         props.addNewOrder(order)
             .then(() => {
-                setProducts([]);
+                setAllProducts([]);
                 setOrderStatus(undefined);
             })
             .catch((error) => {
@@ -60,63 +57,94 @@ export default function AddNewOrderForm(props: AddNewOrderProps) {
         setOrderStatus(OrderStatus.pending);
     }
 
-    function onMeasurementUnitSelect(event: ChangeEvent<HTMLSelectElement>) {
-        setMeasurementUnit(event.target.value as MeasurementUnit);
-    }
-
     function addNewOrderOnSubmit() {
-        axios.post("/customer/orders", orderProducts)
+        axios.post("/customer/orders", productToAdd)
             .catch((error) => {
                 toast.error("Bitte alle Felder ausfüllen. " + error.message);
             })
     }
 
-    const updateOrderProducts = (productId: string, quantity: string) => {
-        const newProductState = orderProducts?.map(
-            orderProduct => {
-                if (orderProduct.productId == productId) {
-                    return {
-                        productId: orderProduct.productId,
-                        productName: orderProduct.productName,
-                        itemNumber: orderProduct.itemNumber,
-                        description: orderProduct.description,
-                        category: orderProduct.category,
-                        quantity: quantity,
-                        measurementUnit: measurementUnit
-                    }
-                }
-                return orderProduct;
-            }
-        )
-        setOrderProducts(newProductState);
+    const addProductToOrder = (product: Product) => {
+        //  const newProductState = productToAdd?.map(
+        //      orderProduct => {
+        //          if (orderProduct.productId === productId) {
+        //              return {
+        //                  productId: orderProduct.productId,
+        //                  productName: orderProduct.productName,
+        //                  itemNumber: orderProduct.itemNumber,
+        //                  description: orderProduct.description,
+        //                  category: orderProduct.category,
+        //                  quantity: quantity,
+        //                  measurementUnit: measurementUnit
+        //              }
+        //          }
+        //          return orderProduct;
+        //      }
+        //  )
+        product.quantity = quantity;
+        product.measurementUnit = measurementUnit;
+        setProductToAdd((prevState) => {
+            return [...prevState, product]
+        });
     }
+
+    const handleMeasurementUnitOnChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setMeasurementUnit(event.target.value as MeasurementUnit);
+    }
+
 
     return (
         <>
 
             <form onSubmit={addNewOrderOnSubmit}>
-                {orderProducts?.map(product =>
-                    <p>
-                        {product.productName}
-                        {product.itemNumber}
-                        {product.description}
-                        {product.category}
-                        <input placeholder={"Anzahl"} value={product.quantity}
-                               onChange={event => updateOrderProducts(product.productId, event.target.value)}/>
-                        <label htmlFor="Kiste">Kiste</label>
-                        <input name="Einheit" id={"Kiste"} type={"radio"} value={MeasurementUnit.KISTE}></input>
-                        <label htmlFor="Kg">Kg</label>
-                        <input name="Einheit" id={"Kg"} type={"radio"} value={MeasurementUnit.KG}></input>
-                        <label htmlFor="Stueck">Stück</label>
-                        <input name="Einheit" id={"Stueck"} type={"radio"} value={MeasurementUnit.STCK}></input>
-                        <label htmlFor="Bund">Bund</label>
-                        <input name="Einheit" id={"Bund"} type={"radio"} value={MeasurementUnit.BUND}></input>
-                        <label htmlFor="Topf">Topf</label>
-                        <input name="Einheit" id={"Topf"} type={"radio"} value={MeasurementUnit.TOPF}></input>
-                        <button type="button">zur Bestellung hinzufügen</button>
-                    </p>)}
+                {allProducts.map(product =>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th>Produkt</th>
+                            <th>Artikelnummer</th>
+                            <th>Beschreibung</th>
+                            <th>Kategorie</th>
+                            <th>Anzahl</th>
+                            <th>Einheit</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                {product.productName}
+                                {product.itemNumber}
+                                {product.description}
+                                {product.category}
+                                <input placeholder={"Anzahl"} value={quantity}
+                                       onChange={event => setQuantity(event.target.value)}/>
+                                <label htmlFor="Kiste">Kiste: <input name="Einheit" id="Kiste" type="radio"
+                                                                     value={MeasurementUnit.KISTE}
+                                                                     onChange={handleMeasurementUnitOnChange}></input></label>
+
+                                <label htmlFor="Kg">Kg : <input name="Einheit" id={"Kg"} type={"radio"}
+                                                                value={MeasurementUnit.KG}
+                                                                onChange={handleMeasurementUnitOnChange}></input></label>
+
+                                <label htmlFor="Stueck">Stück: <input name="Einheit" id={"Stueck"} type={"radio"}
+                                                                      value={MeasurementUnit.STCK}
+                                                                      onChange={handleMeasurementUnitOnChange}></input></label>
+
+                                <label htmlFor="Bund">Bund: <input name="Einheit" id={"Bund"} type={"radio"}
+                                                                   value={MeasurementUnit.BUND}
+                                                                   onChange={handleMeasurementUnitOnChange}></input></label>
+
+                                <label htmlFor="Topf">Topf: <input name="Einheit" id={"Topf"} type={"radio"}
+                                                                   value={MeasurementUnit.TOPF}
+                                                                   onChange={handleMeasurementUnitOnChange}></input></label>
+
+                                <button type="submit" onClick={() => addProductToOrder(product)}>zur Bestellung
+                                    hinzufügen
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>)}
                 <button type={"submit"}>Bestellung senden</button>
-                <button onSubmit={setOrderOnHold}>Bestellung zwischenspeichern</button>
+                <button type="submit" onClick={() => setOrderOnHold()}>Bestellung zwischenspeichern</button>
             </form>
         </>
     );

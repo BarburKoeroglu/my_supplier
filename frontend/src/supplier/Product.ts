@@ -1,5 +1,4 @@
 import {Category} from "./Category";
-import {MeasurementUnit} from "./MeasurementUnit";
 
 export type Product = {
     productId: string,
@@ -8,5 +7,5 @@ export type Product = {
     description: string,
     category?: Category,
     quantity: string,
-    measurementUnit?: MeasurementUnit,
+    measurementUnit?: string,
 }

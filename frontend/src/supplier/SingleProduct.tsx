@@ -1,6 +1,8 @@
 import {Product} from "./Product";
 
-type SingleProductProps = { product: Product | undefined }
+type SingleProductProps = {
+    product: Product | undefined
+}
 
 export default function SingleProduct(props: SingleProductProps) {
 

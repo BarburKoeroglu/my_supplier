@@ -1,13 +1,18 @@
 import {Order} from "./Order";
 
-type SingleOrderProps = { order: Order | undefined }
+type SingleOrderProps = {
+    order: Order | undefined,
+}
 
 export default function SingleOrder(props: SingleOrderProps) {
 
     return (
         <>
-            <td>{props.order?.orderId}</td>
-            <td>{props.order?.orderStatus}</td>
+            <tr>
+                <td>{props.order?.orderId}</td>
+                <td>{props.order?.products?.length}</td>
+                <td>{props.order?.orderStatus}</td>
+            </tr>
         </>
     )
 }
