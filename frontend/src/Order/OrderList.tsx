@@ -19,7 +19,7 @@ export default function OrderList(props: OrderListProps) {
                 <tbody>
                 <tr>
                     <th>Bestellnummer</th>
-                    <th>Inhalte</th>
+                    <th>Produkte</th>
                     <th>Bestellstatus</th>
                 </tr>
                 {props.orders?.map((order) =>

@@ -7,7 +7,6 @@ import OrderList from "../Order/OrderList";
 import useOrders from "../Order/useOrders";
 import AddNewOrderForm from "../Order/AddNewOrderForm";
 
-
 export default function AllRoutes() {
 
     const productHook = useProducts();
@@ -30,4 +29,3 @@ export default function AllRoutes() {
         </>
     )
 }
-//<AddNewOrderForm addNewOrder={props.addOrder}/>

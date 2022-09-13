@@ -1,7 +1,7 @@
 export enum MeasurementUnit{
     KISTE = "KISTE",
     KG = "KG",
-    STCK = "STCK",
+    STUECK = "STUECK",
     BUND = "BUND",
     TOPF = "TOPF",
 }

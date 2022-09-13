@@ -39,6 +39,10 @@ export default function AddNewOrderForm(props: AddNewOrderProps) {
             })
     }
 
+    function testSubmit() {
+        console.log("Form submit!");
+    }
+
     const addProductToOrder = (product: Product) => {
         product.quantity = quantity;
         product.measurementUnit = measurementUnit;
@@ -52,7 +56,7 @@ export default function AddNewOrderForm(props: AddNewOrderProps) {
     return (
         <>
             <ShoppingCart productToAdd={productToAdd}/>
-            <form onSubmit={addNewOrderOnSubmit}>
+            <form>
                 {allProducts.map(product =>
                     <table>
                         <tbody>
@@ -81,7 +85,7 @@ export default function AddNewOrderForm(props: AddNewOrderProps) {
                                                                 onChange={handleMeasurementUnitOnChange}></input></label>
 
                                 <label htmlFor="Stueck">Stück: <input name="Einheit" id={"Stueck"} type={"radio"}
-                                                                      value={MeasurementUnit.STCK}
+                                                                      value={MeasurementUnit.STUECK}
                                                                       onChange={handleMeasurementUnitOnChange}></input></label>
 
                                 <label htmlFor="Bund">Bund: <input name="Einheit" id={"Bund"} type={"radio"}
@@ -99,7 +103,7 @@ export default function AddNewOrderForm(props: AddNewOrderProps) {
                         </tr>
                         </tbody>
                     </table>)}
-                <button type={"submit"}>Bestellung senden</button>
+                <button onClick={addNewOrderOnSubmit} type={"submit"}>Bestellung senden</button>
             </form>
         </>
     );

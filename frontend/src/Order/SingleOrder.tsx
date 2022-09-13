@@ -10,7 +10,7 @@ export default function SingleOrder(props: SingleOrderProps) {
         <>
             <tr>
                 <td>{props.order?.orderId}</td>
-                <td>{props.order?.products?.length}</td>
+                <td>{props.order?.products.length}</td>
                 <td>{props.order?.orderStatus}</td>
             </tr>
         </>

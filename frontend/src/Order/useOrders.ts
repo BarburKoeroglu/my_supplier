@@ -14,10 +14,13 @@ export default function useOrders() {
     }, []);
 
     const addOrder = (newOrder: NewOrder) => {
-        return axios.post("/customer/orders/newOrder", newOrder)
+        return axios.post("/customer/orders", newOrder)
             .then((response) => {
                 fetchAllOrders()
+                console.log("newOrder: ", newOrder)
                 return response.data
+            }).catch((reason) => {
+                console.log("catch ", reason)
             })
     }
 
