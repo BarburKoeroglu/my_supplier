@@ -17,8 +17,8 @@ public class OrderController {
     }
 
     @PostMapping()
-    public ResponseEntity<Order> addOrder(@RequestBody List<Product> productIds) {
-        Order savedOrder = orderService.addOrder(productIds);
+    public ResponseEntity<Order> addOrder(@RequestBody List<Product> products) {
+        Order savedOrder = orderService.addOrder(products);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(savedOrder);

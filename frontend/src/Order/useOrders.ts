@@ -1,8 +1,8 @@
 import {useEffect, useState} from "react";
 import {Order} from "./Order";
-import {NewOrder} from "./NewOrder";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
+import {Product} from "../supplier/Product";
 
 export default function useOrders() {
 
@@ -13,14 +13,12 @@ export default function useOrders() {
         fetchAllOrders()
     }, []);
 
-    const addOrder = (newOrder: NewOrder) => {
-        return axios.post("/customer/orders", newOrder)
+    const addOrder = (productsToOrder: Product[]) => {
+        return axios.post("/customer/orders", productsToOrder)
             .then((response) => {
                 fetchAllOrders()
-                console.log("newOrder: ", newOrder)
                 return response.data
             }).catch((reason) => {
-                console.log("catch ", reason)
             })
     }
 

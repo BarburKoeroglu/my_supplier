@@ -1,11 +1,12 @@
 import {useNavigate} from "react-router-dom";
-import {NewOrder} from "./NewOrder";
+
 import {Order} from "./Order";
 import SingleOrder from "./SingleOrder";
+import {Product} from "../supplier/Product";
 
 type OrderListProps = {
     orders: Order[] | undefined,
-    addOrder: (order: NewOrder) => Promise<Order>,
+    addOrder: (productsToOrder: Product[]) => Promise<Order>,
 }
 
 export default function OrderList(props: OrderListProps) {
