@@ -1,4 +1,4 @@
-import {ChangeEvent, FormEvent, useEffect, useState} from "react";
+import {ChangeEvent, useEffect, useState} from "react";
 import {OrderStatus} from "./OrderStatus";
 import {NewOrder} from "./NewOrder";
 import {Order} from "./Order";
@@ -6,6 +6,7 @@ import {toast} from "react-toastify";
 import axios from "axios";
 import {Product} from "../supplier/Product";
 import {MeasurementUnit} from "../supplier/MeasurementUnit";
+import ShoppingCart from "./ShoppingCart";
 
 type AddNewOrderProps = {
     addNewOrder: (order: NewOrder) => Promise<Order>,
@@ -31,71 +32,26 @@ export default function AddNewOrderForm(props: AddNewOrderProps) {
             )
     }
 
-    const AddNewOrderSubmit = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-
-        const order: NewOrder = {
-            products: allProducts,
-            orderStatus: orderStatus,
-        }
-
-        props.addNewOrder(order)
-            .then(() => {
-                setAllProducts([]);
-                setOrderStatus(undefined);
-            })
-            .catch((error) => {
-                toast.error("Bitte alle Felder ausfüllen. " + error.message)
-            })
-    }
-
-    function orderStatusChange() {
-        setOrderStatus(OrderStatus.sent);
-    }
-
-    function setOrderOnHold() {
-        setOrderStatus(OrderStatus.pending);
-    }
-
     function addNewOrderOnSubmit() {
         axios.post("/customer/orders", productToAdd)
             .catch((error) => {
-                toast.error("Bitte alle Felder ausfüllen. " + error.message);
+                toast.error("Bestellung konnte nicht gespeichert werden. " + error.message);
             })
     }
 
     const addProductToOrder = (product: Product) => {
-        //  const newProductState = productToAdd?.map(
-        //      orderProduct => {
-        //          if (orderProduct.productId === productId) {
-        //              return {
-        //                  productId: orderProduct.productId,
-        //                  productName: orderProduct.productName,
-        //                  itemNumber: orderProduct.itemNumber,
-        //                  description: orderProduct.description,
-        //                  category: orderProduct.category,
-        //                  quantity: quantity,
-        //                  measurementUnit: measurementUnit
-        //              }
-        //          }
-        //          return orderProduct;
-        //      }
-        //  )
         product.quantity = quantity;
         product.measurementUnit = measurementUnit;
-        setProductToAdd((prevState) => {
-            return [...prevState, product]
-        });
+        setProductToAdd(productToAdd.concat(product));
     }
 
     const handleMeasurementUnitOnChange = (event: ChangeEvent<HTMLInputElement>) => {
         setMeasurementUnit(event.target.value as MeasurementUnit);
     }
 
-
     return (
         <>
-
+            <ShoppingCart productToAdd={productToAdd}/>
             <form onSubmit={addNewOrderOnSubmit}>
                 {allProducts.map(product =>
                     <table>
@@ -114,7 +70,7 @@ export default function AddNewOrderForm(props: AddNewOrderProps) {
                                 {product.itemNumber}
                                 {product.description}
                                 {product.category}
-                                <input placeholder={"Anzahl"} value={quantity}
+                                <input placeholder={"Anzahl"}
                                        onChange={event => setQuantity(event.target.value)}/>
                                 <label htmlFor="Kiste">Kiste: <input name="Einheit" id="Kiste" type="radio"
                                                                      value={MeasurementUnit.KISTE}
@@ -136,7 +92,7 @@ export default function AddNewOrderForm(props: AddNewOrderProps) {
                                                                    value={MeasurementUnit.TOPF}
                                                                    onChange={handleMeasurementUnitOnChange}></input></label>
 
-                                <button type="submit" onClick={() => addProductToOrder(product)}>zur Bestellung
+                                <button type="button" onClick={() => addProductToOrder(product)}>zur Bestellung
                                     hinzufügen
                                 </button>
                             </td>
@@ -144,7 +100,6 @@ export default function AddNewOrderForm(props: AddNewOrderProps) {
                         </tbody>
                     </table>)}
                 <button type={"submit"}>Bestellung senden</button>
-                <button type="submit" onClick={() => setOrderOnHold()}>Bestellung zwischenspeichern</button>
             </form>
         </>
     );

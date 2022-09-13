@@ -5,7 +5,6 @@ import org.capstone.my_supplier.supplier.ProductService;
 import org.capstone.my_supplier.util.IdUtil;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,12 +21,7 @@ public class OrderService {
         this.idUtil = idUtil;
     }
 
-    public Order addOrder(List<String> productIds) {
-        List<Product> products = new ArrayList<>();
-        for (String productId : productIds) {
-            Product product = productService.getSingleProduct(productId);
-            products.add(product);
-        }
+    public Order addOrder(List<Product> products) {
         String orderId = idUtil.generateUUId();
         Order order = new Order(orderId, products);
 
