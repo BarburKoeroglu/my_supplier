@@ -21,6 +21,7 @@ export default function Header() {
                 <NavLink className={"nav"} onClick={() => setLinkButton("Bestellungen")}
                          to={'/customer/orders'}>BESTELLUNGEN</NavLink>
             </nav>
+            <hr/>
         </header>
     )
 }

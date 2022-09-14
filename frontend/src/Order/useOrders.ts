@@ -18,7 +18,6 @@ export default function useOrders() {
             .then((response) => {
                 fetchAllOrders()
                 return response.data
-            }).catch((reason) => {
             })
     }
 

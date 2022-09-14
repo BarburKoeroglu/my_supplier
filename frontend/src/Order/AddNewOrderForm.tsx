@@ -1,5 +1,4 @@
 import {ChangeEvent, FormEvent, useEffect, useState} from "react";
-import {OrderStatus} from "./OrderStatus";
 import {Order} from "./Order";
 import axios from "axios";
 import {Product} from "../supplier/Product";
@@ -13,7 +12,6 @@ type AddNewOrderProps = {
 export default function AddNewOrderForm(props: AddNewOrderProps) {
 
     const [allProducts, setAllProducts] = useState<Product[]>([])
-    const [orderStatus, setOrderStatus] = useState<OrderStatus>();
     const [productsToAdd, setProductsToAdd] = useState<Product[]>([]);
     const [quantity, setQuantity] = useState("");
     const [measurementUnit, setMeasurementUnit] = useState<MeasurementUnit>();
@@ -35,10 +33,6 @@ export default function AddNewOrderForm(props: AddNewOrderProps) {
         props.addNewOrder(productsToAdd)
     }
 
-    function testSubmit() {
-        console.log("Form submit!");
-    }
-
     const addProductToOrder = (product: Product) => {
         product.quantity = quantity;
         product.measurementUnit = measurementUnit;
@@ -51,7 +45,9 @@ export default function AddNewOrderForm(props: AddNewOrderProps) {
 
     return (
         <>
+            <h2>Merkliste</h2>
             <ShoppingCart productToAdd={productsToAdd}/>
+            <h3>alle Produkte</h3>
             <form onSubmit={addNewOrderOnSubmit}>
                 {allProducts.map(product =>
                     <table>

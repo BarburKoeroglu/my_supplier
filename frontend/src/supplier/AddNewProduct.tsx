@@ -4,6 +4,7 @@ import {Product} from "./Product";
 import {toast} from "react-toastify";
 import {NewProduct} from "./NewProduct";
 import {MeasurementUnit} from "./MeasurementUnit";
+import "./AddNewProduct.css";
 
 type AddProductProps = {
     addNewProduct: (product: NewProduct) => Promise<Product>,
@@ -46,10 +47,12 @@ export default function AddNewProduct(props: AddProductProps) {
     }
 
     return (
-        <form onSubmit={AddProductSubmit}>
+        <form className={"addProductBar"} onSubmit={AddProductSubmit}>
             <input placeholder={"Produkt"} value={productName} onChange={event => setProductName(event.target.value)}/>
-            <input placeholder={"Artikelnummer"}value={itemNumber} onChange={event => setItemNumber(event.target.value)}/>
-            <input placeholder={"Beschreibung"}value={description} onChange={event => setDescription(event.target.value)}/>
+            <input placeholder={"Artikelnummer"} value={itemNumber}
+                   onChange={event => setItemNumber(event.target.value)}/>
+            <input placeholder={"Beschreibung"} value={description}
+                   onChange={event => setDescription(event.target.value)}/>
             <select id="category" name="category" onChange={onCategoryChange}>
                 <option value="">Kategorie wählen</option>
                 <option value={Category.OBST}>Obst</option>

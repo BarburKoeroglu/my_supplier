@@ -1,0 +1,20 @@
+.addProductBar {
+    margin-left: 50px;
+}
+
+input {
+    padding: 8px;
+    font-size: 16px;
+    color: #1d721d;
+    font-weight: bolder;
+    border: 1px solid #1d721d;
+}
+
+select {
+    padding: 8px;
+    font-size: 16px;
+    background-color: #3B3D3B5F;
+    color: white;
+    border: 1px solid #1d721d;
+    background-color: #EE7805FF;
+}
