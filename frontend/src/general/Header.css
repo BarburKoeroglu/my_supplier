@@ -1,6 +1,6 @@
 header div{
     display: flex;
-    margin: 30px 0 40px 25px;
+    margin: 30px 0 30px 25px;
 }
 
 h1{
@@ -10,10 +10,11 @@ h1{
     display: inline-block;
 }
 
-h1 span{
+h1 span {
     font-style: oblique;
     font-family: bradley hand, Helvetica, Arial, Verdana, Tahoma, sans-serif;
     font-weight: bolder;
+    color: #EE7805FF;
 }
 
 .nav:hover{
@@ -39,7 +40,16 @@ nav .nav {
     text-decoration: none;
 }
 
-.logo{
-    width: 100px;
+.logo {
+    width: 120px;
     filter: invert(26%) sepia(100%) saturate(497%) hue-rotate(73deg) brightness(104%) contrast(88%);;
+}
+
+hr {
+    margin-top: 90px;
+    height: 2px;
+    width: 100%;
+    border-width: 1px;
+    color: #EE7805FF;
+    background-color: #EE7805FF;
 }

@@ -1,5 +1,6 @@
 package org.capstone.my_supplier.customer;
 
+import org.capstone.my_supplier.supplier.Product;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +17,8 @@ public class OrderController {
     }
 
     @PostMapping()
-    public ResponseEntity<Order> addOrder(@RequestBody List<String> productIds) {
-        Order savedOrder = orderService.addOrder(productIds);
+    public ResponseEntity<Order> addOrder(@RequestBody List<Product> products) {
+        Order savedOrder = orderService.addOrder(products);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(savedOrder);

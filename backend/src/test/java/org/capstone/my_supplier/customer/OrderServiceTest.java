@@ -3,7 +3,6 @@ package org.capstone.my_supplier.customer;
 import org.capstone.my_supplier.supplier.*;
 import org.capstone.my_supplier.util.IdUtil;
 import org.junit.jupiter.api.Test;
-import org.mockito.internal.matchers.Or;
 import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.List;
@@ -32,7 +31,7 @@ class OrderServiceTest {
         when(productService.getSingleProduct("1a44")).thenReturn(product1);
 
         //when
-        Order order = orderService.addOrder(List.of("1a44", "1a33"));
+        Order order = orderService.addOrder(List.of(product1, product2));
 
         //then
         verify(orderRepo).save(new Order(

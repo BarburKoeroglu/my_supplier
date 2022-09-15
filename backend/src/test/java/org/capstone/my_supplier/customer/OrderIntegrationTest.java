@@ -14,7 +14,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -44,7 +43,8 @@ class OrderIntegrationTest {
         MvcResult result = mockMvc.perform(post("/customer/orders")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
-                                ["22", "23"]
+                                [{"productId":"22","productName":"PName","itemNumber":"225588","description":"ddd","category":"OBST","quantity":"2","measurementUnit":"BUND"},
+                                {"productId":"23","productName":"PName2","itemNumber":"225599","description":"ddd","category":"KRAEUTER","quantity":"2","measurementUnit":"BUND"}]
                                 """))
                 .andExpect(status().is(201))
                 .andReturn();
@@ -80,7 +80,9 @@ class OrderIntegrationTest {
                         post("/customer/orders")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content("""
-                                        ["2255", "2366", "2477"]
+                                        [{"productId":"2255","productName":"Name1","itemNumber":"5588","description":"ddd","category":"OBST","quantity":"2","measurementUnit":"BUND"},
+                                        {"productId":"2366","productName":"Name2","itemNumber":"6699","description":"xxx","category":"KRAEUTER","quantity":"5","measurementUnit":"STUECK"},
+                                        {"productId":"2477","productName":"Name3","itemNumber":"7711","description":"yyy","category":"TROCKENSORTIMENT","quantity":"12","measurementUnit":"KISTE"}]
                                         """))
                 .andExpect(status().isCreated())
                 .andReturn();
@@ -113,7 +115,9 @@ class OrderIntegrationTest {
                         post("/customer/orders")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content("""
-                                        ["2211", "3322", "4433"]
+                                        [{"productId":"2211","productName":"Name1","itemNumber":"5588","description":"ddd","category":"OBST","quantity":"2","measurementUnit":"BUND"},
+                                        {"productId":"3322","productName":"Name2","itemNumber":"6699","description":"xxx","category":"KRAEUTER","quantity":"5","measurementUnit":"STUECK"},
+                                        {"productId":"4433","productName":"Name3","itemNumber":"7711","description":"yyy","category":"TROCKENSORTIMENT","quantity":"12","measurementUnit":"KISTE"}]
                                         """))
                 .andExpect(status().isCreated())
                 .andReturn();
@@ -152,7 +156,9 @@ class OrderIntegrationTest {
                         post("/customer/orders")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content("""
-                                        ["111", "222", "333"]
+                                        [{"productId":"111","productName":"Name1","itemNumber":"5588","description":"ddd","category":"OBST","quantity":"2","measurementUnit":"BUND"},
+                                        {"productId":"222","productName":"Name2","itemNumber":"6699","description":"xxx","category":"KRAEUTER","quantity":"5","measurementUnit":"STUECK"},
+                                        {"productId":"333","productName":"Name3","itemNumber":"7711","description":"yyy","category":"TROCKENSORTIMENT","quantity":"12","measurementUnit":"KISTE"}]
                                         """))
                 .andExpect(status().isCreated())
                 .andReturn();

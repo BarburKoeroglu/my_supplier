@@ -1,5 +1,5 @@
 import {useParams} from "react-router-dom";
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import {Product} from "./Product";
 import {toast} from "react-toastify";
 import {Category} from "./Category";
@@ -15,24 +15,41 @@ import {
 } from "@mui/material";
 import SingleProduct from "./SingleProduct";
 import "./SingleProduct.css";
+import {MeasurementUnit} from "./MeasurementUnit";
 
 type ProductDetailsProps = {
     products: Product[],
     editProduct: (product: Product) => void,
-    deleteProduct: (productId:string) =>void,
-    fetchAllProducts: (product:Product) =>void,
+    deleteProduct: (productId: string) => void,
+    fetchAllProducts: (product: Product) => void,
 }
 
 export default function ProductDetails(props: ProductDetailsProps) {
+
+    const {productId} = useParams();
+    const product: Product | undefined = props.products.find(element => element.productId === productId);
 
     const [productName, setProductName] = useState('');
     const [itemNumber, setItemNumber] = useState('');
     const [description, setDescription] = useState('');
     const [category, setCategory] = useState<Category>();
+    const [quantity, setQuantity] = useState("");
+    const [measurementUnit, setMeasurementUnit] = useState<MeasurementUnit>();
     const [open, setOpen] = React.useState(false);
-    const {productId} = useParams();
 
-    const product: Product = props.products.find(element => element.productId === productId)!;
+
+    useEffect(() => {
+        if (product) {
+            setProductName(product.productName)
+            setItemNumber(product.itemNumber)
+            setDescription(product.description)
+            setCategory(product.category)
+        }
+    }, [product])
+
+    if (!product) {
+        return <p>Produkt wurde nicht gefunden.</p>
+    }
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -50,6 +67,8 @@ export default function ProductDetails(props: ProductDetailsProps) {
                 itemNumber: itemNumber,
                 description: description,
                 category: category,
+                quantity: quantity,
+                measurementUnit: measurementUnit,
             };
             props.editProduct(updatedProduct)
             toast.success("Die Änderungen wurden gespeichert.");
@@ -60,7 +79,7 @@ export default function ProductDetails(props: ProductDetailsProps) {
     }
 
     function editProductName(event: ChangeEvent<HTMLInputElement>) {
-    setProductName(event.target.value)
+        setProductName(event.target.value)
     }
 
     function editItemNumber(event: ChangeEvent<HTMLInputElement>) {
@@ -84,12 +103,16 @@ export default function ProductDetails(props: ProductDetailsProps) {
                 autoComplete="off"
             >
                 <div>
-                    <Button sx={{backgroundColor: '#1d721d', marginLeft: '20px'}} variant="contained" size={"small"} onClick={handleClickOpen}>Produkt bearbeiten</Button>
-                    <Button sx={{backgroundColor: '#1d721d', marginLeft: '20px'}} variant="contained" size={"small"} onClick={() => props.deleteProduct(product.productId)}>Produkt löschen</Button>
+                    <Button sx={{backgroundColor: '#1d721d', marginLeft: '20px'}} variant="contained" size={"small"}
+                            onClick={handleClickOpen}>Produkt bearbeiten</Button>
+                    <Button sx={{backgroundColor: '#1d721d', marginLeft: '20px'}} variant="contained" size={"small"}
+                            onClick={() => props.deleteProduct(product.productId)}>Produkt löschen</Button>
                     <Dialog open={open} onClose={handleClose}>
-                        <DialogTitle sx={{backgroundColor: '#e8e9ec'}} color={'#1d721d'} fontSize={"big"}>Produktdetails bearbeiten</DialogTitle>
+                        <DialogTitle sx={{backgroundColor: '#e8e9ec'}} color={'#1d721d'} fontSize={"big"}>Produktdetails
+                            bearbeiten</DialogTitle>
                         <DialogContent sx={{backgroundColor: '#e8e9ec'}}>
-                            <DialogContentText sx={{color: '#000'}}>Bitte geben Sie die Änderungen ein.</DialogContentText>
+                            <DialogContentText sx={{color: '#000'}}>Bitte geben Sie die Änderungen
+                                ein.</DialogContentText>
                             <TextField
                                 autoFocus
                                 margin="dense"
@@ -97,7 +120,7 @@ export default function ProductDetails(props: ProductDetailsProps) {
                                 type="text"
                                 fullWidth
                                 variant="standard"
-                                defaultValue={product?.productName}
+                                value={productName}
                                 onChange={editProductName}
                             />
                             <TextField
@@ -107,7 +130,7 @@ export default function ProductDetails(props: ProductDetailsProps) {
                                 type="text"
                                 fullWidth
                                 variant="standard"
-                                defaultValue={product?.itemNumber}
+                                value={itemNumber}
                                 onChange={editItemNumber}
                             />
                             <TextField
@@ -117,7 +140,7 @@ export default function ProductDetails(props: ProductDetailsProps) {
                                 type="text"
                                 fullWidth
                                 variant="standard"
-                                defaultValue={product?.description}
+                                value={description}
                                 onChange={editDescription}
                             />
                             <TextField
@@ -125,7 +148,7 @@ export default function ProductDetails(props: ProductDetailsProps) {
                                 id="Category"
                                 select
                                 label="Select"
-                                defaultValue={product?.category}
+                                value={category}
                                 onChange={event => {
                                     const {value} = event.target;
                                     setCategory(value as Category)
