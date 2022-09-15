@@ -16,7 +16,9 @@ export default function AddNewProduct(props: AddProductProps) {
     const [itemNumber, setItemNumber] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [category, setCategory] = useState<Category>();
+    //eslint-disable-next-line
     const [quantity, setQuantity] = useState("");
+    //eslint-disable-next-line
     const [measurementUnit, setMeasurementUnit] = useState<MeasurementUnit>();
 
     const AddProductSubmit = (event: FormEvent<HTMLFormElement>) => {
