@@ -6,7 +6,6 @@ type ShoppingCartProps = {
 
 export default function ShoppingCart(props: ShoppingCartProps) {
 
-
     return (
         <div>
             {props.productToAdd.map(product =>

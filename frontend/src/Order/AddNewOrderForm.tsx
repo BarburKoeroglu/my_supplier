@@ -4,7 +4,6 @@ import axios from "axios";
 import {Product} from "../supplier/Product";
 import {MeasurementUnit} from "../supplier/MeasurementUnit";
 import ShoppingCart from "./ShoppingCart";
-import "./AddNewOrderForm.css";
 import {useNavigate} from "react-router-dom";
 
 type AddNewOrderProps = {
@@ -62,12 +61,12 @@ export default function AddNewOrderForm(props: AddNewOrderProps) {
                         <th>Anzahl</th>
                         <th>Einheit</th>
                     </tr>
-                    <ShoppingCart productToAdd={productsToAdd}/>
+                    <td><ShoppingCart productToAdd={productsToAdd}/></td>
                     </tbody>
                 </table>
             </div>
             <button className={"sendOrder"}>Bestellung senden</button>
-            <h3>alle Produkte</h3>
+            <h3>Produktliste</h3>
             <form onSubmit={addNewOrderOnSubmit}>
                 {allProducts.map(product =>
                     <table>
@@ -115,7 +114,6 @@ export default function AddNewOrderForm(props: AddNewOrderProps) {
                         </tr>
                         </tbody>
                     </table>)}
-
             </form>
         </div>
     );
