@@ -1,7 +1,7 @@
 ### MY_SUPPLIER
 
-Zum Starten des Projekts auf diesen Link klicken : https://capstone-sett.herokuapp.com/
-Status des Links: [![.github/workflows/deployto-heroku.yml](https://github.com/BarburKoeroglu/my-supplier/actions/workflows/deployto-heroku.yml/badge.svg)](https://github.com/BarburKoeroglu/my-supplier/actions/workflows/deployto-heroku.yml)
+Zum Starten des Projekts auf diesen Link klicken : https://my-supplier.herokuapp.com/
+Status des Links: [![.github/workflows/deployto-heroku.yml](https://github.com/barburkoeroglu/my-supplier/actions/workflows/deployto-heroku.yml/badge.svg)](https://github.com/BarburKoeroglu/my-supplier/actions/workflows/deployto-heroku.yml)
 
 Github Projekte Importieren --> Klicken Sie auf den Button *Import Github* um ein Repository von Github hinzuzufügen . Dabei müssen Sie ihren Github      Benutzernamen eintragen und den Namen vom Repository. Achten Sie dabei auf exakte Namen. Bei leerzeichen oder	unterschiedlicher Groß und Kleinschreibung wird es nicht funktionieren . Sie werden darüber aber auch von den Programm Informiert falls es fehlschlägt.
 
@@ -10,8 +10,8 @@ Manuelles erstellen von Projekten --> Klicken Sie auf den Button *Neues Projekt*
 
 Beachten Sie : Es ist ein reines Desktop Tool
 
-[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/summary/new_code?id=BarburKoeroglu_my-supplier_backend)
+[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/summary/new_code?id=barburkoeroglu_my_supplier_backend)
 
 Testabdeckung :
 
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=BarburKoeroglu_my-supplier_backend&metric=coverage)](https://sonarcloud.io/summary/new_code?id=BarburKoeroglu_my-supplier_backend)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=barburkoeroglu_my_supplier-backend&metric=coverage)](https://sonarcloud.io/summary/new_code?id=barburkoeroglu_my_supplier-backend)
