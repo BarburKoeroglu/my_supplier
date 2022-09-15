@@ -33,10 +33,9 @@ export default function ProductDetails(props: ProductDetailsProps) {
     const [itemNumber, setItemNumber] = useState('');
     const [description, setDescription] = useState('');
     const [category, setCategory] = useState<Category>();
-    const [quantity, setQuantity] = useState("");
-    const [measurementUnit, setMeasurementUnit] = useState<MeasurementUnit>();
+    const [quantity] = useState("");
+    const [measurementUnit] = useState<MeasurementUnit>();
     const [open, setOpen] = React.useState(false);
-
 
     useEffect(() => {
         if (product) {
