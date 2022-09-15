@@ -16,7 +16,7 @@ export default function AllRoutes() {
     return (
         <>
             <Routes>
-                <Route path={"/home"} element={<Home/>}/>
+                <Route path={"/"} element={<Home/>}/>
                 <Route path={"/supplier/products"} element={<ProductList products={productHook.products}
                                                                          addProduct={productHook.addProduct}/>}/>
                 <Route path={"/supplier/products/:productId"} element={<ProductDetails products={productHook.products}
