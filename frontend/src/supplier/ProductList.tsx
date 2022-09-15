@@ -15,7 +15,7 @@ export default function ProductList(props: ProductListProps) {
     const navigate = useNavigate();
 
     return (
-        <span>
+        <div>
             <h2>Produktliste</h2>
             <AddNewProduct addNewProduct={props.addProduct}/>
             <table>
@@ -30,12 +30,13 @@ export default function ProductList(props: ProductListProps) {
                     <tr key={product.productId}>
                         <SingleProduct product={product}/>
                         <td>
-                            <button onClick={() => navigate("/supplier/products/" + product.productId)}>Produktdetails</button>
+                            <button onClick={() => navigate("/supplier/products/" + product.productId)}>Produktdetails
+                            </button>
                         </td>
                     </tr>
                 )}
                 </tbody>
             </table>
-        </span>
+        </div>
     )
 }

@@ -25,8 +25,8 @@ export default function AllRoutes() {
                                                                                        deleteProduct={productHook.deleteProduct}/>}/>
                 <Route path={"/customer/orders"} element={<OrderList orders={orderHook.orders}
                                                                      addOrder={orderHook.addOrder}/>}/>
-                <Route path={"/customer/orders/newOrder"}
-                       element={<AddNewOrderForm addNewOrder={orderHook.addOrder}/>}/>
+                <Route path={"/customer/orders/newOrder"} element={<AddNewOrderForm addNewOrder={orderHook.addOrder}
+                                                                                    fetchAllOrders={orderHook.fetchAllOrders}/>}/>
             </Routes>
         </>
     )

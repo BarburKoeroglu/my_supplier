@@ -4,9 +4,12 @@ import axios from "axios";
 import {Product} from "../supplier/Product";
 import {MeasurementUnit} from "../supplier/MeasurementUnit";
 import ShoppingCart from "./ShoppingCart";
+import "./AddNewOrderForm.css";
+import {useNavigate} from "react-router-dom";
 
 type AddNewOrderProps = {
     addNewOrder: (productsToAdd: Product[]) => Promise<Order>,
+    fetchAllOrders: (order: Order) => void;
 }
 
 export default function AddNewOrderForm(props: AddNewOrderProps) {
@@ -15,6 +18,7 @@ export default function AddNewOrderForm(props: AddNewOrderProps) {
     const [productsToAdd, setProductsToAdd] = useState<Product[]>([]);
     const [quantity, setQuantity] = useState("");
     const [measurementUnit, setMeasurementUnit] = useState<MeasurementUnit>();
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchAllProducts()
@@ -31,6 +35,7 @@ export default function AddNewOrderForm(props: AddNewOrderProps) {
     function addNewOrderOnSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
         props.addNewOrder(productsToAdd)
+            .then(() => navigate("/customer/orders"))
     }
 
     const addProductToOrder = (product: Product) => {
@@ -44,9 +49,24 @@ export default function AddNewOrderForm(props: AddNewOrderProps) {
     }
 
     return (
-        <>
+        <div>
             <h2>Merkliste</h2>
-            <ShoppingCart productToAdd={productsToAdd}/>
+            <div className={"shoppingCart"}>
+                <table>
+                    <tbody>
+                    <tr>
+                        <th>Produkt</th>
+                        <th>Artikelnummer</th>
+                        <th>Beschreibung</th>
+                        <th>Kategorie</th>
+                        <th>Anzahl</th>
+                        <th>Einheit</th>
+                    </tr>
+                    <ShoppingCart productToAdd={productsToAdd}/>
+                    </tbody>
+                </table>
+            </div>
+            <button className={"sendOrder"}>Bestellung senden</button>
             <h3>alle Produkte</h3>
             <form onSubmit={addNewOrderOnSubmit}>
                 {allProducts.map(product =>
@@ -61,14 +81,13 @@ export default function AddNewOrderForm(props: AddNewOrderProps) {
                             <th>Einheit</th>
                         </tr>
                         <tr>
-                            <td>
-                                {product.productName}
-                                {product.itemNumber}
-                                {product.description}
-                                {product.category}
-                                <input placeholder={"Anzahl"}
-                                       onChange={event => setQuantity(event.target.value)}/>
-                                <label htmlFor="Kiste">Kiste: <input name="Einheit" id="Kiste" type="radio"
+                            <td>{product.productName}</td>
+                            <td>{product.itemNumber}</td>
+                            <td>{product.description}</td>
+                            <td>{product.category}</td>
+                            <td><input placeholder={"Anzahl"}
+                                       onChange={event => setQuantity(event.target.value)}/></td>
+                            <td><label htmlFor="Kiste">Kiste: <input name="Einheit" id="Kiste" type="radio"
                                                                      value={MeasurementUnit.KISTE}
                                                                      onChange={handleMeasurementUnitOnChange}></input></label>
 
@@ -87,7 +106,8 @@ export default function AddNewOrderForm(props: AddNewOrderProps) {
                                 <label htmlFor="Topf">Topf: <input name="Einheit" id={"Topf"} type={"radio"}
                                                                    value={MeasurementUnit.TOPF}
                                                                    onChange={handleMeasurementUnitOnChange}></input></label>
-
+                            </td>
+                            <td>
                                 <button type="button" onClick={() => addProductToOrder(product)}>zur Bestellung
                                     hinzufügen
                                 </button>
@@ -95,8 +115,8 @@ export default function AddNewOrderForm(props: AddNewOrderProps) {
                         </tr>
                         </tbody>
                     </table>)}
-                <button>Bestellung senden</button>
+
             </form>
-        </>
+        </div>
     );
 }

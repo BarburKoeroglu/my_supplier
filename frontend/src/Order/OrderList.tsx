@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom";
 import {Order} from "./Order";
 import SingleOrder from "./SingleOrder";
 import {Product} from "../supplier/Product";
+import "./OrderList.css"
 
 type OrderListProps = {
     orders: Order[] | undefined,
@@ -15,7 +16,8 @@ export default function OrderList(props: OrderListProps) {
     return (
         <span>
             <h2>Bestellungen</h2>
-            <button onClick={() => navigate("/customer/orders/newOrder")}>neue Bestellung</button>
+            <button className={"newOrder"}
+                    onClick={() => navigate("/customer/orders/newOrder")}>neue Bestellung</button>
             <table>
                 <tbody>
                 <tr>
