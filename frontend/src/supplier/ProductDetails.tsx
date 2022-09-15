@@ -37,7 +37,6 @@ export default function ProductDetails(props: ProductDetailsProps) {
     const [measurementUnit] = useState<MeasurementUnit>();
     const [open, setOpen] = React.useState(false);
 
-
     useEffect(() => {
         if (product) {
             setProductName(product.productName)
